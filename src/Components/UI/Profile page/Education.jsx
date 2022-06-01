@@ -7,10 +7,10 @@ const Education = () => {
         <h5 className="mb-0">Education</h5>
         <div>
           <button className="border-0 bg-transparent fs-5 float-end">
-            <i class="bi bi-pencil"></i>
+            <i className="bi bi-pencil"></i>
           </button>
           <button className="border-0 bg-transparent fs-5 float-end">
-            <i class="bi bi-plus-lg"></i>
+            <i className="bi bi-plus-lg"></i>
           </button>
         </div>
       </div>

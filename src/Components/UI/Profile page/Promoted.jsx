@@ -7,7 +7,7 @@ const Promoted = () => {
       <div className="d-flex justify-content-between align-items-center px-1">
         <h6 className="mb-0">Promoted</h6>
         <button className="border-0 bg-transparent float-end">
-          <i class="bi bi-three-dots"></i>
+          <i className="bi bi-three-dots"></i>
         </button>
       </div>
       <>

@@ -15,9 +15,9 @@ const NavLinks = () => {
           src="https://via.placeholder.com/22"
           alt=""
         />
-        <div class="dropdown">
+        <div className="dropdown">
           <button
-            class="btn btn-transparent dropdown-toggle border-0 p-0"
+            className="btn btn-transparent dropdown-toggle border-0 p-0"
             type="button"
             id="dropdownMenuButton1"
             data-bs-toggle="dropdown"
@@ -25,9 +25,9 @@ const NavLinks = () => {
           >
             Me
           </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             <li>
-              <a class="dropdown-item" href="#">
+              <a className="dropdown-item" href="#">
                 Action
               </a>
             </li>

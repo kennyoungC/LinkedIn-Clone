@@ -6,7 +6,7 @@ const Suggested = () => {
       <h6>Suggested for you</h6>
       <span className="text-muted mb-3">
         <span>
-          <i class="bi bi-eye-fill"></i>
+          <i className="bi bi-eye-fill"></i>
         </span>{" "}
         Private to you
       </span>

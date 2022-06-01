@@ -15,13 +15,13 @@ const MyNavbar = () => {
                 alt=""
                 style={{ height: "48px", width: "48px", objectFit: "cover" }}
               />
-              <div class="input-group ">
-                <span class="input-group-text " id="basic-addon1">
-                  <i class="bi bi-search"></i>
+              <div className="input-group ">
+                <span className="input-group-text " id="basic-addon1">
+                  <i className="bi bi-search"></i>
                 </span>
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   placeholder="Username"
                   aria-label="Username"
                   aria-describedby="basic-addon1"
@@ -35,11 +35,11 @@ const MyNavbar = () => {
             <div className="d-flex align-items-center flex-column justify-content-center">
               <span className="fs-4">
                 {" "}
-                <i class="bi bi-grid-3x3-gap"></i>
+                <i className="bi bi-grid-3x3-gap"></i>
               </span>
-              <div class="dropdown">
+              <div className="dropdown">
                 <button
-                  class="btn btn-transparent dropdown-toggle border-0 p-0"
+                  className="btn btn-transparent dropdown-toggle border-0 p-0"
                   type="button"
                   id="dropdownMenuButton1"
                   data-bs-toggle="dropdown"
@@ -47,9 +47,12 @@ const MyNavbar = () => {
                 >
                   Me
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <ul
+                  className="dropdown-menu"
+                  aria-labelledby="dropdownMenuButton1"
+                >
                   <li>
-                    <a class="dropdown-item" href="#">
+                    <a className="dropdown-item" href="#">
                       Action
                     </a>
                   </li>

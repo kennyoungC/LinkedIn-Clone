@@ -6,7 +6,7 @@ const About = () => {
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h5 className="mb-0">About</h5>
         <button className="border-0 fs-5 bg-transparent float-end">
-          <i class="bi bi-pencil"></i>
+          <i className="bi bi-pencil"></i>
         </button>
       </div>
       <p className="mb-0 ">

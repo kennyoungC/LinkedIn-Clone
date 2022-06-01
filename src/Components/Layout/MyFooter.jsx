@@ -95,7 +95,7 @@ const MyFooter = () => {
               <li>
                 <div className="d-flex gap-2 align-items-start">
                   <button className="border-0 bg-transparent ">
-                    <i class="bi bi-question-circle-fill"></i>
+                    <i className="bi bi-question-circle-fill"></i>
                   </button>
                   <div className="d-flex flex-column gap-2">
                     <span className="">Questions?</span>
@@ -106,7 +106,7 @@ const MyFooter = () => {
               <li>
                 <div className="d-flex gap-2 align-items-start">
                   <button className="border-0 bg-transparent ">
-                    <i class="bi bi-question-circle-fill"></i>
+                    <i className="bi bi-question-circle-fill"></i>
                   </button>
                   <div className="d-flex flex-column gap-2">
                     <span className="">Manage your account and privacy</span>
@@ -115,16 +115,17 @@ const MyFooter = () => {
                 </div>
               </li>
             </ul>
-            <div class="input-group mb-3 d-flex flex-column w-50">
+            <div className="input-group mb-3 d-flex flex-column w-50">
               <p className="mb-1">Select Language</p>
               <select
-                class="form-select w-100 "
+                defaultValue="english"
+                className="form-select w-100 "
                 aria-label="Default select example"
               >
-                <option selected>English (English)</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                <option value="english">English (English)</option>
+                <option value="german">German</option>
+                <option value="french">French</option>
+                <option value="spanish">Spanish</option>
               </select>
             </div>
           </div>

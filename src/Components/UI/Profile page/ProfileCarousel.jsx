@@ -7,7 +7,7 @@ const ProfileCarousel = () => {
         <div className="d-flex justify-content-between align-items-center ">
           <p className="text-secondary mb-0">Open to work</p>
           <button className="border-0 bg-transparent">
-            <i class="bi bi-pen"></i>
+            <i className="bi bi-pen"></i>
           </button>
         </div>
         <p className="mb-0">Sofware Developer roles</p>
@@ -23,7 +23,7 @@ const ProfileCarousel = () => {
             Share that you're hiring and attract qualified candidates
           </p>
           <button className="border-0 bg-transparent">
-            <i class="bi bi-x-lg"></i>{" "}
+            <i className="bi bi-x-lg"></i>{" "}
           </button>
         </div>
         <span>

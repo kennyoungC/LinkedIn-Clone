@@ -11,7 +11,7 @@ const PromotedItems = () => {
         </span>
       </div>
       <button className="border-0 bg-transparent  ">
-        <i class="bi bi-chevron-right"></i>
+        <i className="bi bi-chevron-right"></i>
       </button>
     </div>
   )
