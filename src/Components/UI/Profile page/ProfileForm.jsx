@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react"
 import { Form, Modal } from "react-bootstrap"
+import useHttp from "../../../hooks/use-http"
 
 const ProfileForm = (props) => {
+  const url = "https://striveschool-api.herokuapp.com/api/profile/me"
+  const auth =
+    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjk1MDkxNmJmZTkyYzAwMTVlY2E5ZjAiLCJpYXQiOjE2NTM5MzQzNTgsImV4cCI6MTY1NTE0Mzk1OH0.VaDp06IDD3hAoXF2L3NJHR2aBc8cxxJNoPeBAyIB-lc"
+  const { isEditing, sendRequest: fetchProfiles } = useHttp()
   const [profile, setProfile] = useState({
     id: "",
     name: "",
@@ -12,43 +17,59 @@ const ProfileForm = (props) => {
     country: "",
   })
   useEffect(() => {
-    fetchProfiles()
-  }, [])
-
-  const fetchProfiles = async () => {
-    try {
-      const response = await fetch(
-        "https://striveschool-api.herokuapp.com/api/profile/me",
-        {
-          headers: {
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjk1MDkxNmJmZTkyYzAwMTVlY2E5ZjAiLCJpYXQiOjE2NTM5MzQzNTgsImV4cCI6MTY1NTE0Mzk1OH0.VaDp06IDD3hAoXF2L3NJHR2aBc8cxxJNoPeBAyIB-lc",
-          },
-        }
-      )
-      const data = await response.json()
+    const transformedProfile = (profileData) => {
       let loadedProfile = {
-        id: data._id,
-        name: data.name,
-        image: data.image,
-        bio: data.bio,
-        title: data.title,
-        surname: data.surname,
-        area: data.area,
+        id: profileData._id,
+        name: profileData.name,
+        image: profileData.image,
+        bio: profileData.bio,
+        title: profileData.title,
+        surname: profileData.surname,
+        area: profileData.area,
       }
 
       setProfile({
         ...loadedProfile,
       })
-    } catch (error) {
-      console.log(error)
     }
-  }
+
+    fetchProfiles({ url, headers: { Authorization: auth } }, transformedProfile)
+  }, [fetchProfiles])
+
+  // const fetchProfiles = async () => {
+  //   try {
+  //     const response = await fetch(
+  //       "https://striveschool-api.herokuapp.com/api/profile/me",
+  //       {
+  //         headers: {
+  //           Authorization:
+  //             "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjk1MDkxNmJmZTkyYzAwMTVlY2E5ZjAiLCJpYXQiOjE2NTM5MzQzNTgsImV4cCI6MTY1NTE0Mzk1OH0.VaDp06IDD3hAoXF2L3NJHR2aBc8cxxJNoPeBAyIB-lc",
+  //         },
+  //       }
+  //     )
+  //     const data = await response.json()
+  //     let loadedProfile = {
+  //       id: data._id,
+  //       name: data.name,
+  //       image: data.image,
+  //       bio: data.bio,
+  //       title: data.title,
+  //       surname: data.surname,
+  //       area: data.area,
+  //     }
+
+  //     setProfile({
+  //       ...loadedProfile,
+  //     })
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
 
   const submitHandler = (e) => {
     e.preventDefault()
     // props.onClose()
-    console.log(profile)
+    // console.log(profile)
     props.onSubmit(profile)
   }
 

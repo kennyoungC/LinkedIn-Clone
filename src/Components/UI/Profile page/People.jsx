@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react"
+import useHttp from "../../../hooks/use-http"
+import LoadingSpinner from "../Spinner/LoadingSpinner"
 import PeopleItem from "./PeopleItem"
 
 const People = ({ title }) => {
@@ -6,37 +8,36 @@ const People = ({ title }) => {
   const [showMore, setShowMore] = useState(5)
   const [isShowing, setIsShowing] = useState(true)
 
+  const { isEditing: isLoading, sendRequest } = useHttp()
+  const url = "https://striveschool-api.herokuapp.com/api/profile/"
+  const auth =
+    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjk1MDkxNmJmZTkyYzAwMTVlY2E5ZjAiLCJpYXQiOjE2NTM5MzQzNTgsImV4cCI6MTY1NTE0Mzk1OH0.VaDp06IDD3hAoXF2L3NJHR2aBc8cxxJNoPeBAyIB-lc"
   useEffect(() => {
-    fetchProfiles()
-  }, [])
-
-  const fetchProfiles = async () => {
-    try {
-      const response = await fetch(
-        "https://striveschool-api.herokuapp.com/api/profile/",
-        {
-          headers: {
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjk1MDkxNmJmZTkyYzAwMTVlY2E5ZjAiLCJpYXQiOjE2NTM5MzQzNTgsImV4cCI6MTY1NTE0Mzk1OH0.VaDp06IDD3hAoXF2L3NJHR2aBc8cxxJNoPeBAyIB-lc",
-          },
-        }
-      )
-      const data = await response.json()
+    const transformedData = (people) => {
       let loadedProfile = []
-      for (const keys in data) {
+      for (const keys in people) {
         loadedProfile.push({
-          id: data[keys]._id,
-          name: data[keys].name,
-          image: data[keys].image,
-          bio: data[keys].bio,
-          title: data[keys].title,
+          id: people[keys]._id,
+          name: people[keys].name,
+          image: people[keys].image,
+          bio: people[keys].bio,
+          title: people[keys].title,
         })
       }
       setPeople(loadedProfile)
-    } catch (error) {
-      console.log(error)
     }
-  }
+
+    sendRequest(
+      {
+        url,
+        headers: {
+          Authorization: auth,
+        },
+      },
+      transformedData
+    )
+  }, [sendRequest])
+
   const showMoreHandler = () => {
     // setShowMore(showMore + 5)
     setShowMore((prevState) => prevState + 5)
@@ -49,9 +50,15 @@ const People = ({ title }) => {
   return (
     <div className="card p-2 mb-2">
       <h6>{title}</h6>
-      {people.slice(0, showMore).map((person) => (
-        <PeopleItem key={person.id} person={person} />
-      ))}
+      {!isLoading &&
+        people
+          .slice(0, showMore)
+          .map((person) => <PeopleItem key={person.id} person={person} />)}
+      {isLoading && (
+        <div className="centered">
+          <LoadingSpinner />
+        </div>
+      )}
       {isShowing && (
         <button
           onClick={showMoreHandler}

@@ -22,10 +22,28 @@ const alertSlice = createSlice({
   },
 })
 
+const initialExperienceState = {
+  experience: [],
+}
+
+const experienceSlice = createSlice({
+  name: "experience",
+  initialState: initialExperienceState,
+  reducers: {
+    addExperience(state, action) {
+      state.experience = action.payload
+    },
+    removeExperience(state, action) {},
+  },
+})
+
 const store = configureStore({
   reducer: {
     alert: alertSlice.reducer,
+    experience: experienceSlice.reducer,
   },
 })
 export const { showAlert, hideAlert } = alertSlice.actions
+
+export const { addExperience, removeExperience } = experienceSlice.actions
 export default store

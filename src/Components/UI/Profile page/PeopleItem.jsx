@@ -13,7 +13,8 @@ const PeopleItem = ({ person }) => {
       <div>
         <div className="d-flex flex-column gap-1 mb-1">
           <p className="mb-0">
-            {person.name} &middot; <span className="text-muted">2nd</span>
+            <Link to={`/specific-profile/${person.id}`}>{person.name} </Link>
+            &middot; <span className="text-muted">2nd</span>
           </p>
           <span className="text-muted">{person.title}</span>
         </div>
