@@ -5,6 +5,7 @@ import MyFooter from "./Components/Layout/MyFooter"
 import MyNavbar from "./Components/Layout/MyNavbar"
 import AlertMessage from "./Components/UI/Alert/AlertMessage"
 import Profile from "./Components/UI/Profile page/Profile"
+import EditExperiencePage from "./Pages/EditExperiencePage"
 import SpecificProfile from "./Pages/SpecificProfile"
 
 function App() {
@@ -27,6 +28,10 @@ function App() {
         <Route
           path="/specific-profile/:profileId"
           element={<SpecificProfile />}
+        />
+        <Route
+          path="/edit-experience/:experienceId"
+          element={<EditExperiencePage />}
         />
       </Routes>
       <MyFooter />

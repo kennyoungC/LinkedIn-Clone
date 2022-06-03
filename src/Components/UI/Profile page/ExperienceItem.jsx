@@ -1,6 +1,18 @@
 import Moment from "moment"
+import { useState } from "react"
+import { useSelector } from "react-redux"
+import { useParams } from "react-router-dom"
+import EditSpecificExperience from "../../Experience/EditSpecificExperience"
+import EditSpecificExperienceForm from "../../Experience/EditSpecificExperienceForm"
 
 const ExperienceItem = (props) => {
+  const editIcon = useSelector((state) => state.experience.showEditing)
+  const [show, setShow] = useState(false)
+  // const params = useParams()
+  // console.log(params)
+  const handleClose = () => setShow(false)
+  const handleShow = () => setShow(true)
+
   const startDate = props.experience.startDate
   const start = Moment(startDate).format("MMM YYYY")
 
@@ -27,20 +39,41 @@ const ExperienceItem = (props) => {
   }
   return (
     <>
-      <div className="d-flex gap-1 align-items-start mb-3 px-1">
-        <img src="https://via.placeholder.com/48" alt="" />
-        <div className="d-flex flex-column lh-sm">
-          <h6 className="mb-0">{props.experience.role}</h6>
-          <p className="mb-0">{props.experience.company} &middot; Part-time</p>
-          <p className="mb-0">
-            {start} - {end} &middot;
-            <span className="ms-1">
-              {`${years > 0 ? years + `${+years > 1 ? " yrs" : " yr"} ` : ""}`}
-              {`${months > 0 ? months + " mos" : ""}`}
-            </span>
-          </p>
-          <p className="text-capitalize">{props.experience.area}</p>
+      <div className="d-flex justify-content-between align-items-start">
+        <div className="d-flex gap-1 align-items-start mb-3 px-1">
+          <img src="https://via.placeholder.com/48" alt="" />
+          <div className="d-flex flex-column lh-sm">
+            <h6 className="mb-0">{props.experience.role}</h6>
+            <p className="mb-0">
+              {props.experience.company} &middot; Part-time
+            </p>
+            <p className="mb-0">
+              {start} - {end} &middot;
+              <span className="ms-1">
+                {`${
+                  years > 0 ? years + `${+years > 1 ? " yrs" : " yr"} ` : ""
+                }`}
+                {`${months > 0 ? months + " mos" : ""}`}
+              </span>
+            </p>
+            <p className="text-capitalize">{props.experience.area}</p>
+          </div>
         </div>
+        {show && (
+          <EditSpecificExperience
+            id={props.experience._id}
+            onClose={handleClose}
+            show={handleShow}
+          />
+        )}
+        {editIcon && (
+          <button
+            onClick={handleShow}
+            className="border-0 bg-transparent fs-5 float-end"
+          >
+            <i className="bi bi-pencil"></i>
+          </button>
+        )}
       </div>
       <hr />
     </>

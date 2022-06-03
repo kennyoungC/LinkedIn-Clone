@@ -20,6 +20,7 @@ const useHttp = () => {
 
       const data = await response.json()
       applyData(data)
+      // console.log(data)
       setIsEditing(false)
     } catch (error) {
       console.log(error.message)

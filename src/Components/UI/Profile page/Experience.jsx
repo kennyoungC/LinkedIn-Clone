@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import useHttp from "../../../hooks/use-http"
-import { addExperience } from "../../../store"
+import { addExperience, showEditing } from "../../../store"
 import LoadingSpinner from "../Spinner/LoadingSpinner"
 import EditExperienceModal from "./EditExperienceModal"
 import ExperienceItem from "./ExperienceItem"
@@ -31,6 +31,7 @@ const Experience = ({ experienceId }) => {
   useEffect(() => {
     const setData = (data) => {
       dispatch(addExperience(data))
+      dispatch(showEditing(false))
     }
     fetchExperience(
       {
@@ -61,9 +62,11 @@ const Experience = ({ experienceId }) => {
         <h5 className="mb-0">Experience</h5>
         {!profileId && (
           <div>
-            <button className="border-0 bg-transparent fs-5 float-end">
-              <i className="bi bi-pencil"></i>
-            </button>
+            <Link to={`/edit-experience/${id}`}>
+              <button className="border-0 bg-transparent fs-5 float-end">
+                <i className="bi bi-pencil"></i>
+              </button>
+            </Link>
             {show && (
               <EditExperienceModal
                 experienceId={id}
