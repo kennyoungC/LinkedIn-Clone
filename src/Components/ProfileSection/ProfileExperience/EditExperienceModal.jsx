@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import useHttp from "../../../hooks/use-http"
 import { hideAlert, showAlert } from "../../../store"
-import LoadingSpinner from "../Spinner/LoadingSpinner"
+import LoadingSpinner from "../../UI/Spinner/LoadingSpinner"
 import Experience from "./Experience"
 import ExperienceForm from "./ExperienceForm"
 

@@ -4,7 +4,7 @@ import { Route, Routes } from "react-router-dom"
 import MyFooter from "./Components/Layout/MyFooter"
 import MyNavbar from "./Components/Layout/MyNavbar"
 import AlertMessage from "./Components/UI/Alert/AlertMessage"
-import Profile from "./Components/UI/Profile page/Profile"
+import Profile from "./Pages/Profile"
 import EditExperiencePage from "./Pages/EditExperiencePage"
 import SpecificProfile from "./Pages/SpecificProfile"
 

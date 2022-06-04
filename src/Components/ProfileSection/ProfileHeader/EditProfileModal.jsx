@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux"
 import useHttp from "../../../hooks/use-http"
 import { hideAlert, showAlert } from "../../../store"
 
-import LoadingSpinner from "../Spinner/LoadingSpinner"
+import LoadingSpinner from "../../UI/Spinner/LoadingSpinner"
 import ProfileForm from "./ProfileForm"
 
 const EditProfileModal = (props) => {

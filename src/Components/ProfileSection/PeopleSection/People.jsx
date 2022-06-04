@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import useHttp from "../../../hooks/use-http"
-import LoadingSpinner from "../Spinner/LoadingSpinner"
+import LoadingSpinner from "../../UI/Spinner/LoadingSpinner"
 import PeopleItem from "./PeopleItem"
 
 const People = ({ title }) => {

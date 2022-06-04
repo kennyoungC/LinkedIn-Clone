@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useParams } from "react-router-dom"
 import { addExperience, showEditing } from "../../../store"
-import LoadingSpinner from "../Spinner/LoadingSpinner"
+import LoadingSpinner from "../../UI/Spinner/LoadingSpinner"
 import EditExperienceModal from "./EditExperienceModal"
 import ExperienceItem from "./ExperienceItem"
 

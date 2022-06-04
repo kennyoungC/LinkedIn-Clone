@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Form, Modal, Button } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
-import useHttp from "../../hooks/use-http"
+import useHttp from "../../../hooks/use-http"
 
 const EditSpecificExperienceForm = (props) => {
   const navigate = useNavigate()

@@ -1,7 +1,7 @@
 import { Col, Container, Row } from "react-bootstrap"
-import AsideFirstRow from "../Components/UI/Profile page/AsideFirstRow"
-import EditExperience from "../Components/UI/Profile page/EditExperience"
-import ExperienceItem from "../Components/UI/Profile page/ExperienceItem"
+import AsideFirstRow from "../Components/ProfileSection/Aside/AsideFirstRow"
+import EditExperience from "../Components/ProfileSection/ProfileExperience/EditExperience"
+import ExperienceItem from "../Components/ProfileSection/ProfileExperience/ExperienceItem"
 
 const EditExperiencePage = () => {
   return (

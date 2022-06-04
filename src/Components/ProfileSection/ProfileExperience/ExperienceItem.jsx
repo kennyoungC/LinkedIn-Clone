@@ -2,8 +2,8 @@ import Moment from "moment"
 import { useState } from "react"
 import { useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
-import EditSpecificExperience from "../../Experience/EditSpecificExperience"
-import EditSpecificExperienceForm from "../../Experience/EditSpecificExperienceForm"
+import EditSpecificExperience from "./EditSpecificExperience"
+import EditSpecificExperienceForm from "./EditSpecificExperienceForm"
 
 const ExperienceItem = (props) => {
   const editIcon = useSelector((state) => state.experience.showEditing)

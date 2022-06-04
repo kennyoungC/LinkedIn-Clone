@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react"
 import { Col, Container, Row } from "react-bootstrap"
-import useHttp from "../../../hooks/use-http"
-import About from "./About"
-import Aside from "./Aside"
-import Education from "./Education"
-import Experience from "./Experience"
+import useHttp from "../hooks/use-http"
+import About from "../Components/ProfileSection/About"
+import Aside from "../Components/ProfileSection/Aside/Aside"
+import Education from "../Components/ProfileSection/Education"
+import Experience from "../Components/ProfileSection/ProfileExperience/Experience"
 
-import ProfileHeader from "./ProfileHeader"
-import Suggested from "./Suggested"
+import ProfileHeader from "../Components/ProfileSection/ProfileHeader/ProfileHeader"
+import Suggested from "../Components/ProfileSection/Suggested"
 
 const Profile = () => {
   const [profile, setProfile] = useState([])

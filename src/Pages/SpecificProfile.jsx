@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react"
 import { Col, Container, Row } from "react-bootstrap"
 import { useParams } from "react-router-dom"
-import About from "../Components/UI/Profile page/About"
-import Aside from "../Components/UI/Profile page/Aside"
-import Education from "../Components/UI/Profile page/Education"
-import Experience from "../Components/UI/Profile page/Experience"
+import About from "../Components/ProfileSection/About"
+import Aside from "../Components/ProfileSection/Aside/Aside"
+import Education from "../Components/ProfileSection/Education"
+import Experience from "../Components/ProfileSection/ProfileExperience/Experience"
 
-import ProfileHeader from "../Components/UI/Profile page/ProfileHeader"
+import ProfileHeader from "../Components/ProfileSection/ProfileHeader/ProfileHeader"
 
 const SpecificProfile = () => {
   const [profile, setProfile] = useState({})
