@@ -1,7 +1,7 @@
 import React from "react"
 import AsideFirstRow from "./AsideFirstRow"
-import AlsoViewed from "./People"
-import PeopleYouMayKnow from "./People"
+import AlsoViewed from "../PeopleSection/People"
+import PeopleYouMayKnow from "../PeopleSection/People"
 import Promoted from "./Promoted"
 
 const Aside = () => {
