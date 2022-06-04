@@ -1,10 +1,14 @@
 import React from "react"
+import { NavLink } from "react-router-dom"
 import EachNavLink from "./EachNavLink"
 
 const NavLinks = () => {
   return (
     <div className="d-flex gap-4 text-center border-end pe-4">
-      <EachNavLink title="Home" icon="bi bi-house-door-fill" />
+      <NavLink className="text-decoration-none" to={"/feed"}>
+        {" "}
+        <EachNavLink title="Home" icon="bi bi-house-door-fill" />
+      </NavLink>
       <EachNavLink title="My Network" icon="bi bi-people-fill" />
       <EachNavLink title="Jobs" icon="bi bi-briefcase-fill" />
       <EachNavLink title="Messaging" icon="bi bi-chat-dots-fill" />

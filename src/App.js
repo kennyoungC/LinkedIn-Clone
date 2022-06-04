@@ -7,6 +7,7 @@ import AlertMessage from "./Components/UI/Alert/AlertMessage"
 import Profile from "./Pages/Profile"
 import EditExperiencePage from "./Pages/EditExperiencePage"
 import SpecificProfile from "./Pages/SpecificProfile"
+import NewsFeed from "./Pages/NewsFeed"
 
 function App() {
   const isShowing = useSelector((state) => state.alert.isShowing)
@@ -24,6 +25,7 @@ function App() {
     <>
       <MyNavbar />
       <Routes>
+        <Route path="/feed" element={<NewsFeed />} />
         <Route path="/profile" element={UserProfile} />
         <Route
           path="/specific-profile/:profileId"
