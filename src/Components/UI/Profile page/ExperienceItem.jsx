@@ -27,7 +27,7 @@ const ExperienceItem = (props) => {
     )
     const diff = hours / 8760
     years = diff.toFixed(1).split(".")[0]
-    months = diff.toFixed(1).split(".")[1]
+    months = +diff.toFixed(1).split(".")[1] + 2
   }
 
   if (endDate === null || endDate === undefined) {
@@ -35,7 +35,7 @@ const ExperienceItem = (props) => {
     const hours = Math.floor(Math.abs(new Date(startDate) - new Date()) / 36e5)
     const diff = hours / 8760
     years = diff.toFixed(1).split(".")[0]
-    months = diff.toFixed(1).split(".")[1]
+    months = +diff.toFixed(1).split(".")[1] + 2
   }
   return (
     <>

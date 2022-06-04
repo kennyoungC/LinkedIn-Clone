@@ -1,13 +1,14 @@
 import React from "react"
 import { Modal } from "react-bootstrap"
 import { useDispatch } from "react-redux"
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import useHttp from "../../hooks/use-http"
 import LoadingSpinner from "../UI/Spinner/LoadingSpinner"
 import EditSpecificExperienceForm from "./EditSpecificExperienceForm"
-
+import { useffect } from "react"
 const EditSpecificExperience = (props) => {
-  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  // const dispatch = useDispatch()
   const { isEditing, sendRequest } = useHttp()
   const { experienceId } = useParams()
 
@@ -26,6 +27,7 @@ const EditSpecificExperience = (props) => {
       },
       () => {
         props.onClose()
+        navigate("/profile")
       }
     )
   }

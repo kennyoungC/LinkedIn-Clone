@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useParams } from "react-router-dom"
-import useHttp from "../../../hooks/use-http"
 import { addExperience, showEditing } from "../../../store"
 import LoadingSpinner from "../Spinner/LoadingSpinner"
 import EditExperienceModal from "./EditExperienceModal"
@@ -9,43 +8,49 @@ import ExperienceItem from "./ExperienceItem"
 
 const Experience = ({ experienceId }) => {
   const experience = useSelector((state) => state.experience.experience)
-  const { isEditing: isLoading, sendRequest: fetchExperience } = useHttp()
+  const [isLoading, setIsLoading] = useState(false)
+
   const dispatch = useDispatch()
   const [show, setShow] = useState(false)
 
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
-
   const params = useParams()
   const { profileId } = params
-  let id
-  if (!profileId) {
-    id = experienceId
-  }
-  if (profileId) {
-    id = profileId
-  }
+
+  let id = profileId ? profileId : experienceId
+  // console.log(profileId)
+  // console.log(experienceId)
 
   const url = `https://striveschool-api.herokuapp.com/api/profile/${id}/experiences`
 
   useEffect(() => {
-    const setData = (data) => {
-      dispatch(addExperience(data))
-      dispatch(showEditing(false))
-    }
-    fetchExperience(
-      {
-        url,
-        headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjk1MDkxNmJmZTkyYzAwMTVlY2E5ZjAiLCJpYXQiOjE2NTM5MzQzNTgsImV4cCI6MTY1NTE0Mzk1OH0.VaDp06IDD3hAoXF2L3NJHR2aBc8cxxJNoPeBAyIB-lc",
-        },
-      },
-      setData
-    )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, fetchExperience])
+    const fetchExp = async () => {
+      setIsLoading(true)
+      try {
+        const response = await fetch(url, {
+          headers: {
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjliMjc2ZjYwOTUyNTAwMTUzZTc1NDEiLCJpYXQiOjE2NTQzMzUzNDQsImV4cCI6MTY1NTU0NDk0NH0.zh3wENBfsCIGTLqdRiTI94Fauch8Ttcg4eCIbZ16DnE",
+          },
+        })
+        if (!response.ok) {
+          throw new Error(response.statusText)
+        }
 
+        const data = await response.json()
+        dispatch(addExperience(data))
+        dispatch(showEditing(false))
+        setIsLoading(false)
+      } catch (error) {
+        console.log(error.message)
+        setIsLoading(false)
+      }
+    }
+    fetchExp()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id])
+  // console.log(id)
   let experienceContent
   if (experience.length > 0) {
     experienceContent = experience.map((experience) => (
@@ -62,14 +67,14 @@ const Experience = ({ experienceId }) => {
         <h5 className="mb-0">Experience</h5>
         {!profileId && (
           <div>
-            <Link to={`/edit-experience/${id}`}>
+            <Link to={`/edit-experience/${experienceId}`}>
               <button className="border-0 bg-transparent fs-5 float-end">
                 <i className="bi bi-pencil"></i>
               </button>
             </Link>
             {show && (
               <EditExperienceModal
-                experienceId={id}
+                experienceId={experienceId}
                 show={show}
                 onClose={handleClose}
               />

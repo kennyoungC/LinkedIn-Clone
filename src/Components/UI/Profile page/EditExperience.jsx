@@ -4,10 +4,11 @@ import { useParams } from "react-router-dom"
 import useHttp from "../../../hooks/use-http"
 import { getItem, hideAlert, showAlert, showEditing } from "../../../store"
 import EditExperienceModal from "./EditExperienceModal"
-
+import { useNavigate } from "react-router-dom"
 import ExperienceItem from "./ExperienceItem"
 
 const EditExperience = () => {
+  const navigate = useNavigate()
   const [show, setShow] = useState(false)
   // const [showEditForm, setShowEditForm] = useState(false)
 
@@ -25,11 +26,19 @@ const EditExperience = () => {
     dispatch(getItem())
     dispatch(showEditing(true))
   }, [])
+
+  const goBackHandler = () => {
+    navigate(-1, { replace: true })
+  }
+
   return (
     <div className="card mb-2 p-3">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <div className="d-flex align-items-center gap-2 mb-2">
-          <button className="border-0 bg-transparent fs-5 float-end">
+          <button
+            onClick={goBackHandler}
+            className="border-0 bg-transparent fs-5 float-end"
+          >
             <i className="bi bi-arrow-left"></i>
           </button>{" "}
           <h5 className="mb-0">Experience</h5>

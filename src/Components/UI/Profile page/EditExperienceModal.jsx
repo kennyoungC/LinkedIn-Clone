@@ -1,5 +1,6 @@
 import { Modal } from "react-bootstrap"
 import { useDispatch } from "react-redux"
+import { useNavigate } from "react-router-dom"
 import useHttp from "../../../hooks/use-http"
 import { hideAlert, showAlert } from "../../../store"
 import LoadingSpinner from "../Spinner/LoadingSpinner"
@@ -7,6 +8,7 @@ import Experience from "./Experience"
 import ExperienceForm from "./ExperienceForm"
 
 const EditExperienceModal = (props) => {
+  const navigate = useNavigate()
   const url = `https://striveschool-api.herokuapp.com/api/profile/${props.id}/experiences`
 
   const auth =
@@ -17,7 +19,7 @@ const EditExperienceModal = (props) => {
     const p = () => {
       dispatch(showAlert({ message: "New Experience Added", type: "success" }))
       props.onClose()
-
+      navigate("/profile")
       setTimeout(() => {
         dispatch(hideAlert())
       }, 3000)
