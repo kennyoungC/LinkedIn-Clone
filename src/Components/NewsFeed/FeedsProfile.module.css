@@ -1,0 +1,17 @@
+.profile-img {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.border-radius-bottom {
+  border-radius: 0 0 15px 15px !important;
+}
+.FeedsProfile {
+}
+/* .border-radius-top {
+  border-radius: 15px 15px 0 0;
+} */
+.card {
+  border-radius: 0;
+}

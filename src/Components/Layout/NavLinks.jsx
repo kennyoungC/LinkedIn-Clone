@@ -9,6 +9,7 @@ const NavLinks = () => {
         {" "}
         <EachNavLink title="Home" icon="bi bi-house-door-fill" />
       </NavLink>
+
       <EachNavLink title="My Network" icon="bi bi-people-fill" />
       <EachNavLink title="Jobs" icon="bi bi-briefcase-fill" />
       <EachNavLink title="Messaging" icon="bi bi-chat-dots-fill" />

@@ -8,6 +8,7 @@ import Profile from "./Pages/Profile"
 import EditExperiencePage from "./Pages/EditExperiencePage"
 import SpecificProfile from "./Pages/SpecificProfile"
 import NewsFeed from "./Pages/NewsFeed"
+import GoToTop from "./store/GoToTop"
 
 function App() {
   const isShowing = useSelector((state) => state.alert.isShowing)
@@ -36,6 +37,7 @@ function App() {
           element={<EditExperiencePage />}
         />
       </Routes>
+      <GoToTop />
       <MyFooter />
     </>
   )
