@@ -2,11 +2,40 @@ import React, { useState } from "react"
 import { Link } from "react-router-dom"
 import PostModal from "./PostModal"
 
+import { useNavigate } from "react-router-dom"
+
 const PostNewFeed = () => {
+  const navigate = useNavigate()
   const [show, setShow] = useState(false)
 
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
+
+  const newPostHandler = async (post) => {
+    try {
+      const response = await fetch(
+        "https://striveschool-api.herokuapp.com/api/posts/",
+        {
+          method: "POST",
+          body: JSON.stringify({ text: post }),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjk1MDkxNmJmZTkyYzAwMTVlY2E5ZjAiLCJpYXQiOjE2NTM5MzQzNTgsImV4cCI6MTY1NTE0Mzk1OH0.VaDp06IDD3hAoXF2L3NJHR2aBc8cxxJNoPeBAyIB-lc",
+          },
+        }
+      )
+      if (response.ok) {
+        handleClose()
+        navigate("/feed")
+        console.log("Post created")
+      } else {
+        throw new Error("Something went wrong")
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div className="card p-3">
@@ -19,7 +48,13 @@ const PostNewFeed = () => {
             style={{ width: "48px", height: "48px" }}
           />
         </Link>
-        {show && <PostModal show={handleShow} onHide={handleClose} />}
+        {show && (
+          <PostModal
+            onPost={newPostHandler}
+            show={handleShow}
+            onHide={handleClose}
+          />
+        )}
         <input
           style={{ cursor: "pointer" }}
           onClick={handleShow}

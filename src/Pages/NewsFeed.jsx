@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Col, Container, Row } from "react-bootstrap"
+import { useNavigate } from "react-router-dom"
 import AddToFeed from "../Components/NewsFeed/AddToFeed"
 import Feeds from "../Components/NewsFeed/Feeds"
 import FeedsProfile from "../Components/NewsFeed/FeedsProfile"
@@ -13,8 +14,8 @@ const NewsFeed = () => {
   const [isLoading, setIsLoading] = useState(false)
   useEffect(() => {
     fetchNewsFeed()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
   const fetchNewsFeed = async () => {
     try {
       setIsLoading(true)
@@ -29,7 +30,10 @@ const NewsFeed = () => {
       )
       const data = await response.json()
       setIsLoading(false)
-      setPosts(data)
+      const filterOutNull = data.filter((data) => data.user !== null)
+      console.log(filterOutNull)
+      const miniPost = filterOutNull.reverse().slice(0, 10)
+      setPosts(miniPost)
     } catch (error) {
       console.log(error)
     }
@@ -47,9 +51,7 @@ const NewsFeed = () => {
           <PostNewFeed />
           <hr />
           {!isLoading &&
-            posts
-              .slice(0, 5)
-              .map((post) => <Feeds key={post._id} posts={post} />)}
+            posts.map((post) => <Feeds key={post._id} posts={post} />)}
           {isLoading && (
             <div className="centered ">
               <LoadingSpinner />

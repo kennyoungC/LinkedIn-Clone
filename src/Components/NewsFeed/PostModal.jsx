@@ -4,30 +4,9 @@ import { Button, Form, Modal } from "react-bootstrap"
 const PostModal = (props) => {
   const [postInput, setPostInput] = useState("")
 
-  const newPostHandler = async (e) => {
-    e.prventDefault()
-    try {
-      const response = await fetch(
-        "https://striveschool-api.herokuapp.com/api/profile/me",
-        {
-          method: "POST",
-          body: JSON.stringify(postInput),
-          headers: {
-            "Content-Type": "application/json",
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjk1MDkxNmJmZTkyYzAwMTVlY2E5ZjAiLCJpYXQiOjE2NTM5MzQzNTgsImV4cCI6MTY1NTE0Mzk1OH0.VaDp06IDD3hAoXF2L3NJHR2aBc8cxxJNoPeBAyIB-lc",
-          },
-        }
-      )
-      if (response.status === 200) {
-        props.onHide()
-        console.log("Post created")
-      } else {
-        throw new Error("Something went wrong")
-      }
-    } catch (error) {
-      console.log(error)
-    }
+  const sendPostHandler = (e) => {
+    e.preventDefault()
+    props.onPost(postInput)
   }
 
   return (
@@ -53,7 +32,7 @@ const PostModal = (props) => {
               </Button>
             </div>
           </div>
-          <Form onSubmit={newPostHandler}>
+          <Form>
             <Form.Group
               className="my-2"
               controlId="exampleForm.ControlTextarea1"
@@ -76,6 +55,7 @@ const PostModal = (props) => {
               <i className="bi bi-three-dots"></i>
             </span>
             <Button
+              onClick={sendPostHandler}
               disabled={postInput.length === 0}
               className="float-end px-3 py-0 rounded-pill"
               variant={postInput.length === 0 ? "secondary" : "primary"}

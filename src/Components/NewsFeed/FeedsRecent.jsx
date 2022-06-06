@@ -3,8 +3,8 @@ import { Card } from "react-bootstrap"
 
 const FeedsRecent = () => {
   return (
-    <>
-      <Card className="p-3 mt-2 sticky-top">
+    <div className="sticky-top">
+      <Card className="p-3 mt-2 ">
         <h6> Recent</h6>
         <div className="d-flex gap-1  ">
           <span>
@@ -30,10 +30,10 @@ const FeedsRecent = () => {
           </li>
         </ul>
       </Card>
-      <Card className="text-center fw-bold p-3">
+      <Card className="text-center fw-bold p-3 ">
         <p className="mb-0 text-muted">Discover more</p>
       </Card>
-    </>
+    </div>
   )
 }
 
