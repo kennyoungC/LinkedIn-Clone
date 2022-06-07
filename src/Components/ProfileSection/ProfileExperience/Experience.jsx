@@ -24,30 +24,30 @@ const Experience = ({ experienceId }) => {
 
   const url = `https://striveschool-api.herokuapp.com/api/profile/${id}/experiences`
 
-  useEffect(() => {
-    const fetchExp = async () => {
-      setIsLoading(true)
-      try {
-        const response = await fetch(url, {
-          headers: {
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjliMjc2ZjYwOTUyNTAwMTUzZTc1NDEiLCJpYXQiOjE2NTQzMzUzNDQsImV4cCI6MTY1NTU0NDk0NH0.zh3wENBfsCIGTLqdRiTI94Fauch8Ttcg4eCIbZ16DnE",
-          },
-        })
-        if (!response.ok) {
-          throw new Error(response.statusText)
-        }
-
-        const data = await response.json()
-        dispatch(addExperience(data))
-        dispatch(showEditing(false))
-        setIsLoading(false)
-      } catch (error) {
-        console.log(error.message)
-        setIsLoading(false)
+  const fetchExp = async () => {
+    setIsLoading(true)
+    try {
+      const response = await fetch(url, {
+        headers: {
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjliMjc2ZjYwOTUyNTAwMTUzZTc1NDEiLCJpYXQiOjE2NTQzMzUzNDQsImV4cCI6MTY1NTU0NDk0NH0.zh3wENBfsCIGTLqdRiTI94Fauch8Ttcg4eCIbZ16DnE",
+        },
+      })
+      if (!response.ok) {
+        throw new Error(response.statusText)
       }
+
+      const data = await response.json()
+      dispatch(addExperience(data))
+      dispatch(showEditing(false))
+      setIsLoading(false)
+    } catch (error) {
+      console.log(error.message)
+      setIsLoading(false)
     }
-    fetchExp()
+  }
+  useEffect(() => {
+    id && fetchExp()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
   // console.log(id)

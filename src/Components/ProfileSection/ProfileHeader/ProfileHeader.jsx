@@ -5,11 +5,12 @@ import { setId } from "../../../store"
 import EditProfileModal from "./EditProfileModal"
 import ProfileCarousel from "./ProfileCarousel"
 import styles from "./ProfileHeader.module.css"
+import ProfilePicModal from "./ProfilePicModal"
 
 const ProfileHeader = (props) => {
+  const [showProfileModal, setShowProfileModal] = useState(true)
   const dispatch = useDispatch()
   const id = useSelector((state) => state.user.id)
-  console.log("redux id", id)
   const profile = props.profile
   useEffect(() => {
     dispatch(setId(profile.id))
@@ -19,6 +20,9 @@ const ProfileHeader = (props) => {
     isUser = true
   }
 
+  const closeProfilePicHandler = () => setShowProfileModal(false)
+  const showProfilePicHandler = () => setShowProfileModal(true)
+
   const [show, setShow] = useState(false)
 
   const handleClose = () => setShow(false)
@@ -26,12 +30,22 @@ const ProfileHeader = (props) => {
 
   return (
     <div className="card rounded-3 position-relative mb-2">
-      <img
-        src="https://via.placeholder.com/22"
-        className="card-img-top"
-        alt="..."
-        style={{ height: "185px", objectFit: "cover" }}
-      />
+      {showProfileModal && (
+        <ProfilePicModal
+          profile={profile}
+          handleClose={closeProfilePicHandler}
+          show={showProfileModal}
+        />
+      )}
+      <span>
+        <img
+          src="https://via.placeholder.com/22"
+          className="card-img-top"
+          alt="..."
+          style={{ height: "185px", objectFit: "cover" }}
+          onClick={showProfilePicHandler}
+        />
+      </span>
       {isUser && (
         <span className={`${styles.camera} text-primary position-absolute p-2`}>
           <i className="bi bi-camera-fill"></i>

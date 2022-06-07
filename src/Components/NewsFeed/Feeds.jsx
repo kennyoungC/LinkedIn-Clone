@@ -5,6 +5,8 @@ import Moment from "moment"
 import OptionListMenu from "./OptionListMenu"
 import UserOptionListMenu from "./UserOptionListMenu"
 const Feeds = ({ posts, profileDetails }) => {
+  // console.log("posts", posts)
+  // console.log("profile details", profileDetails)
   const [showContent, setShowContent] = useState(false)
   const profileid = profileDetails.id
   const postId = posts._id

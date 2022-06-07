@@ -82,7 +82,7 @@ const ProfileForm = (props) => {
         <Form.Label>First name*</Form.Label>
         <Form.Control
           onChange={(e) => inputHandler(e, "name")}
-          value={profile.name}
+          value={profile.name ?? ""}
           type="text"
         />
       </Form.Group>
@@ -91,7 +91,7 @@ const ProfileForm = (props) => {
         <Form.Control
           type="text"
           onChange={(e) => inputHandler(e, "surname")}
-          value={profile.surname}
+          value={profile.surname ?? ""}
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="formBasicAdditionalName">
@@ -103,14 +103,14 @@ const ProfileForm = (props) => {
         <Form.Control
           onChange={(e) => inputHandler(e, "bio")}
           type="text"
-          value={profile.bio}
+          value={profile.bio ?? ""}
         />
       </Form.Group>
 
       <p className="text-muted fs-5">Current position</p>
       <a className="text-decoration-none" href="#">
         <span>
-          <i class="bi bi-plus-lg"></i>
+          <i className="bi bi-plus-lg"></i>
         </span>{" "}
         Add new position
       </a>
@@ -125,7 +125,7 @@ const ProfileForm = (props) => {
       </Form.Group>
       <a className="text-decoration-none " href="#">
         <span>
-          <i class="bi bi-plus-lg"></i>
+          <i className="bi bi-plus-lg"></i>
         </span>{" "}
         Add new education
       </a>
@@ -135,12 +135,16 @@ const ProfileForm = (props) => {
         <Form.Control
           type="text"
           onChange={(e) => inputHandler(e, "area")}
-          value={profile.area}
+          value={profile.area ?? ""}
         />
       </Form.Group>
-      <Form.Group className="my-3" controlId="formBasicAdditionalName">
+      <Form.Group className="my-3" controlId="formBasicCity">
         <Form.Label>City</Form.Label>
         <Form.Control type="text" />
+      </Form.Group>
+      <Form.Group className="my-3" controlId="formBasicFile">
+        <Form.Label>upload Image</Form.Label>
+        <Form.Control type="file" />
       </Form.Group>
       <Modal.Footer>
         <button className="btn btn-primary">Save</button>
