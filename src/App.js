@@ -21,12 +21,19 @@ function App() {
       </main>
     </Container>
   )
+  const newsFeed = (
+    <>
+      {isShowing && <AlertMessage />}
+
+      <NewsFeed />
+    </>
+  )
 
   return (
     <>
       <MyNavbar />
       <Routes>
-        <Route path="/feed" element={<NewsFeed />} />
+        <Route path="/feed" element={newsFeed} />
         <Route path="/profile" element={UserProfile} />
         <Route
           path="/specific-profile/:profileId"

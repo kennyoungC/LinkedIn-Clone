@@ -2,7 +2,7 @@ import React from "react"
 import { Button, Card } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import styles from "./FeedsProfile.module.css"
-const FeedsProfile = () => {
+const FeedsProfile = ({ profileDetails }) => {
   return (
     <div className={styles.FeedsProfile}>
       <Card>
@@ -12,17 +12,16 @@ const FeedsProfile = () => {
           <span className={styles["profile-img"]}>
             <img
               className="rounded-circle img-thumbnail "
-              src="https://via.placeholder.com/75"
+              src={profileDetails.image}
               alt=""
             />
           </span>
           <Link to={"/profile"}>
-            <Card.Title className="text-uppercase mt-5">Kenneth obi</Card.Title>
+            <Card.Title className="text-uppercase mt-5">
+              {profileDetails.name}
+            </Card.Title>
           </Link>
-          <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </Card.Text>
+          <Card.Text>{profileDetails.bio}</Card.Text>
         </Card.Body>
       </Card>
       <Card className="p-3">
@@ -57,7 +56,7 @@ const FeedsProfile = () => {
       <Card className={`${styles["border-radius-bottom"]} p-3`}>
         <div className="d-flex gap-2 align-items-center">
           <span>
-            <i class="bi bi-bookmark-fill"></i>
+            <i className="bi bi-bookmark-fill"></i>
           </span>
           <p className="fw-bold mb-0">My items</p>
         </div>

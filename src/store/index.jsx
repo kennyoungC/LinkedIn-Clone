@@ -39,9 +39,19 @@ const experienceSlice = createSlice({
       const exp = localStorage.getItem("experience")
       state.experience = JSON.parse(exp)
     },
-    removeExperience(state, action) {},
     showEditing(state, action) {
       state.showEditing = action.payload
+    },
+  },
+})
+
+const userSlices = createSlice({
+  name: "user",
+  initialState: { id: "" },
+  reducers: {
+    setId(state, action) {
+      state.id = action.payload
+      localStorage.setItem("id", action.payload)
     },
   },
 })
@@ -50,10 +60,11 @@ const store = configureStore({
   reducer: {
     alert: alertSlice.reducer,
     experience: experienceSlice.reducer,
+    user: userSlices.reducer,
   },
 })
 export const { showAlert, hideAlert } = alertSlice.actions
-
+export const { setId } = userSlices.actions
 export const { showEditing, getItem, addExperience, removeExperience } =
   experienceSlice.actions
 export default store

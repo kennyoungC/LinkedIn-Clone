@@ -8,7 +8,7 @@ const FeedsRecent = () => {
         <h6> Recent</h6>
         <div className="d-flex gap-1  ">
           <span>
-            <i class="bi bi-calendar"></i>
+            <i className="bi bi-calendar"></i>
           </span>
           <p className="text-muted">Information Session f...</p>
         </div>

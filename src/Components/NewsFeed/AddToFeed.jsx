@@ -13,7 +13,7 @@ const AddToFeed = () => {
         <p className="mb-0">
           View all recomendations{" "}
           <span>
-            <i class="bi bi-arrow-right"></i>
+            <i className="bi bi-arrow-right"></i>
           </span>
         </p>
       </div>

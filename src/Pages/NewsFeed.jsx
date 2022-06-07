@@ -8,50 +8,71 @@ import FeedsRecent from "../Components/NewsFeed/FeedsRecent"
 import PostNewFeed from "../Components/NewsFeed/PostNewFeed"
 import WhoIsHiring from "../Components/NewsFeed/WhoIsHiring"
 import LoadingSpinner from "../Components/UI/Spinner/LoadingSpinner"
+import useHttp from "../hooks/use-http"
 
 const NewsFeed = () => {
   const [posts, setPosts] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
+  const [profile, setProfile] = useState({})
+  const { isEditing: isLoading, sendRequest } = useHttp()
+  // const [isLoading, setIsLoading] = useState(false)
   useEffect(() => {
-    fetchNewsFeed()
-  }, [])
-
-  const fetchNewsFeed = async () => {
-    try {
-      setIsLoading(true)
-      const response = await fetch(
-        "https://striveschool-api.herokuapp.com/api/posts/",
-        {
-          headers: {
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjk1MDkxNmJmZTkyYzAwMTVlY2E5ZjAiLCJpYXQiOjE2NTM5MzQzNTgsImV4cCI6MTY1NTE0Mzk1OH0.VaDp06IDD3hAoXF2L3NJHR2aBc8cxxJNoPeBAyIB-lc",
-          },
-        }
-      )
-      const data = await response.json()
-      setIsLoading(false)
+    // fetchNewsFeed()
+    const getData = (data) => {
       const filterOutNull = data.filter((data) => data.user !== null)
-      console.log(filterOutNull)
-      const miniPost = filterOutNull.reverse().slice(0, 10)
+      const miniPost = filterOutNull.reverse().slice(0, 20)
       setPosts(miniPost)
-    } catch (error) {
-      console.log(error)
     }
-  }
+
+    sendRequest(
+      {
+        url: "https://striveschool-api.herokuapp.com/api/posts/",
+        headers: {
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjk1MDkxNmJmZTkyYzAwMTVlY2E5ZjAiLCJpYXQiOjE2NTM5MzQzNTgsImV4cCI6MTY1NTE0Mzk1OH0.VaDp06IDD3hAoXF2L3NJHR2aBc8cxxJNoPeBAyIB-lc",
+        },
+      },
+      getData
+    )
+  }, [sendRequest])
+  useEffect(() => {
+    // fetchNewsFeed()
+    const getData = (data) => {
+      const newData = {
+        name: data.name + " " + data.surname,
+        image: data.image,
+        id: data._id,
+        bio: data.bio,
+      }
+      setProfile(newData)
+    }
+
+    sendRequest(
+      {
+        url: "https://striveschool-api.herokuapp.com/api/profile/me",
+        headers: {
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjk1MDkxNmJmZTkyYzAwMTVlY2E5ZjAiLCJpYXQiOjE2NTM5MzQzNTgsImV4cCI6MTY1NTE0Mzk1OH0.VaDp06IDD3hAoXF2L3NJHR2aBc8cxxJNoPeBAyIB-lc",
+        },
+      },
+      getData
+    )
+  }, [sendRequest])
 
   return (
     <Container>
       <Row className="my-4">
         <Col md={3}>
-          <FeedsProfile />
+          <FeedsProfile profileDetails={profile} />
 
           <FeedsRecent />
         </Col>
         <Col md={6}>
-          <PostNewFeed />
+          <PostNewFeed profileDetails={profile} />
           <hr />
           {!isLoading &&
-            posts.map((post) => <Feeds key={post._id} posts={post} />)}
+            posts.map((post) => (
+              <Feeds profileDetails={profile} key={post._id} posts={post} />
+            ))}
           {isLoading && (
             <div className="centered ">
               <LoadingSpinner />

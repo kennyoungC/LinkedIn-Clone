@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from "react"
 import { Row, Col, Button } from "react-bootstrap"
+import { useDispatch, useSelector } from "react-redux"
+import { setId } from "../../../store"
 import EditProfileModal from "./EditProfileModal"
 import ProfileCarousel from "./ProfileCarousel"
 import styles from "./ProfileHeader.module.css"
 
 const ProfileHeader = (props) => {
+  const dispatch = useDispatch()
+  const id = useSelector((state) => state.user.id)
+  console.log("redux id", id)
   const profile = props.profile
-
+  useEffect(() => {
+    dispatch(setId(profile.id))
+  }, [id, dispatch, profile.id])
   let isUser = false
-  if (String(profile.id) === "62950916bfe92c0015eca9f0") {
+  if (String(profile.id) === id) {
     isUser = true
   }
 

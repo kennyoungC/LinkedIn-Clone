@@ -1,8 +1,23 @@
-import React from "react"
+import React, { useEffect, useRef, useState } from "react"
 import PostActions from "./PostActions"
 import Moment from "moment"
-const Feeds = ({ posts }) => {
+
+import OptionListMenu from "./OptionListMenu"
+import UserOptionListMenu from "./UserOptionListMenu"
+const Feeds = ({ posts, profileDetails }) => {
+  const [showContent, setShowContent] = useState(false)
+  const profileid = profileDetails.id
   const postId = posts._id
+
+  const optionContent =
+    profileid === posts.user._id ? (
+      <UserOptionListMenu profile={profileDetails} postId={postId} />
+    ) : (
+      <OptionListMenu
+        postName={posts.user.name}
+        postSurname={posts.user.surname}
+      />
+    )
   const timeago = Moment(posts.createdAt).fromNow()
   return (
     <div className="card my-2 px-3 py-2">
@@ -20,12 +35,20 @@ const Feeds = ({ posts }) => {
             </p>
             <span className="fs-6 text-muted">{posts.user.title}</span>
             <span>
-              {timeago} &middot; <i class="bi bi-globe"></i>
+              {timeago} &middot; <i className="bi bi-globe"></i>
             </span>
           </div>
         </div>
-        <span className="ms-auto">
-          <i class="bi bi-three-dots"></i>
+        <span className=" ms-auto position-relative">
+          <span
+            onClick={() => setShowContent((prev) => !prev)}
+            style={{ cursor: "pointer" }}
+          >
+            {" "}
+            <i className="bi bi-three-dots"></i>
+          </span>
+
+          {showContent && optionContent}
         </span>
       </div>
       <p className="mb-0">{posts.text}</p>

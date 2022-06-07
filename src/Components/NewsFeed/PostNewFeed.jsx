@@ -3,8 +3,11 @@ import { Link } from "react-router-dom"
 import PostModal from "./PostModal"
 
 import { useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { hideAlert, showAlert } from "../../store"
 
-const PostNewFeed = () => {
+const PostNewFeed = ({ profileDetails }) => {
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   const [show, setShow] = useState(false)
 
@@ -28,7 +31,11 @@ const PostNewFeed = () => {
       if (response.ok) {
         handleClose()
         navigate("/feed")
-        console.log("Post created")
+
+        dispatch(showAlert({ message: "New Post added", type: "success" }))
+        setTimeout(() => {
+          dispatch(hideAlert())
+        }, 2000)
       } else {
         throw new Error("Something went wrong")
       }
@@ -43,13 +50,14 @@ const PostNewFeed = () => {
         <Link to={"/profile"}>
           <img
             className="rounded-circle"
-            src="https://via.placeholder.com/48x48"
+            src={profileDetails.image}
             alt=""
             style={{ width: "48px", height: "48px" }}
           />
         </Link>
         {show && (
           <PostModal
+            profileDetails={profileDetails}
             onPost={newPostHandler}
             show={handleShow}
             onHide={handleClose}
@@ -66,25 +74,25 @@ const PostNewFeed = () => {
       <ul className="list-unstyled d-flex align-items-center justify-content-between mb-0">
         <li>
           <span className="text-primary me-1">
-            <i class="bi bi-image"></i>
+            <i className="bi bi-image"></i>
           </span>{" "}
           Photo
         </li>
         <li>
           <span className="text-success me-1">
-            <i class="bi bi-file-play-fill"></i>
+            <i className="bi bi-file-play-fill"></i>
           </span>{" "}
           Video
         </li>
         <li>
           <span className="text-primary me-1">
-            <i class="bi bi-calendar4-event"></i>
+            <i className="bi bi-calendar4-event"></i>
           </span>{" "}
           Event
         </li>
         <li>
           <span className="text-danger me-1">
-            <i class="bi bi-pencil-square"></i>
+            <i className="bi bi-pencil-square"></i>
           </span>{" "}
           Write article
         </li>
