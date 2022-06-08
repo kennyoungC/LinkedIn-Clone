@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { Button, Form, Modal } from "react-bootstrap"
+import FeedImgModal from "./FeedImgModal"
 
 const PostModal = (props) => {
   const [postInput, setPostInput] = useState("")
@@ -46,8 +47,11 @@ const PostModal = (props) => {
                 rows={4}
               />
             </Form.Group>
+
             <span className="float-start d-flex gap-3">
-              <i className="bi bi-image"></i>
+              <span className="text-primary" style={{ cursor: "pointer" }}>
+                <i className="bi bi-image"></i>
+              </span>
               <i className="bi bi-file-play-fill"></i>
               <i className="bi bi-sticky-fill"></i>
               <i className="bi bi-briefcase-fill"></i>

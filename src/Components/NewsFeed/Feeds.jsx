@@ -5,7 +5,7 @@ import Moment from "moment"
 import OptionListMenu from "./OptionListMenu"
 import UserOptionListMenu from "./UserOptionListMenu"
 const Feeds = ({ posts, profileDetails }) => {
-  // console.log("posts", posts)
+  // console.log("posts", posts.image)
   // console.log("profile details", profileDetails)
   const [showContent, setShowContent] = useState(false)
   const profileid = profileDetails.id
@@ -54,6 +54,17 @@ const Feeds = ({ posts, profileDetails }) => {
         </span>
       </div>
       <p className="mb-0">{posts.text}</p>
+      <div className="text-center my-1">
+        <img
+          src={posts.image !== undefined ? posts.image : " "}
+          alt=""
+          style={{
+            width: posts.image !== undefined ? "290px" : "",
+            height: posts.image !== undefined ? "290px" : "",
+            objectFit: "cover",
+          }}
+        />
+      </div>
       <hr />
       <PostActions />
     </div>

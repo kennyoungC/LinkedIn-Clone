@@ -7,10 +7,15 @@ const FeedsProfile = ({ profileDetails }) => {
     <div className={styles.FeedsProfile}>
       <Card>
         {" "}
-        <Card.Img variant="top" src="https://via.placeholder.com/150x60" />
+        <Card.Img
+          variant="top"
+          src="https://images.unsplash.com/photo-1654476728670-989c41eee300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+          style={{ width: "100%", height: "80px", objectFit: "cover" }}
+        />
         <Card.Body className=" text-center border-bottom position-relative">
           <span className={styles["profile-img"]}>
             <img
+              style={{ width: "150px", height: "100px", objectFit: "cover" }}
               className="rounded-circle img-thumbnail "
               src={profileDetails.image}
               alt=""

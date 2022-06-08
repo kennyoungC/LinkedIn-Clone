@@ -8,7 +8,7 @@ import styles from "./ProfileHeader.module.css"
 import ProfilePicModal from "./ProfilePicModal"
 
 const ProfileHeader = (props) => {
-  const [showProfileModal, setShowProfileModal] = useState(true)
+  const [showProfileModal, setShowProfileModal] = useState(false)
   const dispatch = useDispatch()
   const id = useSelector((state) => state.user.id)
   const profile = props.profile
@@ -39,11 +39,10 @@ const ProfileHeader = (props) => {
       )}
       <span>
         <img
-          src="https://via.placeholder.com/22"
+          src="https://images.unsplash.com/photo-1654476728670-989c41eee300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
           className="card-img-top"
           alt="..."
           style={{ height: "185px", objectFit: "cover" }}
-          onClick={showProfilePicHandler}
         />
       </span>
       {isUser && (
@@ -54,10 +53,16 @@ const ProfileHeader = (props) => {
       <div className="card-body position relative">
         <span className={`${styles["profile-pic"]} position-absolute`}>
           <img
+            onClick={showProfilePicHandler}
             src={profile.image}
             className="card-img-top rounded-circle img-thumbnail"
             alt="..."
-            style={{ height: "150px", width: "150px", objectFit: "cover" }}
+            style={{
+              height: "150px",
+              width: "150px",
+              objectFit: "cover",
+              cursor: "pointer",
+            }}
           />
         </span>
         {show && <EditProfileModal show={show} onClose={handleClose} />}

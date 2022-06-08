@@ -16,7 +16,6 @@ const NewsFeed = () => {
   const { isEditing: isLoading, sendRequest } = useHttp()
   // const [isLoading, setIsLoading] = useState(false)
   useEffect(() => {
-    // fetchNewsFeed()
     const getData = (data) => {
       const filterOutNull = data.filter((data) => data.user !== null)
       const miniPost = filterOutNull.reverse().slice(0, 20)
@@ -34,6 +33,11 @@ const NewsFeed = () => {
       getData
     )
   }, [sendRequest])
+
+  const postCreated = (newPost) => {
+    setPosts([newPost, ...posts])
+  }
+
   useEffect(() => {
     // fetchNewsFeed()
     const getData = (data) => {
@@ -58,6 +62,12 @@ const NewsFeed = () => {
     )
   }, [sendRequest])
 
+  const FeedsWrapper = ({ posts }) => {
+    return posts.map((post) => (
+      <Feeds profileDetails={profile} key={post._id} posts={post} />
+    ))
+  }
+
   return (
     <Container>
       <Row className="my-4">
@@ -67,12 +77,9 @@ const NewsFeed = () => {
           <FeedsRecent />
         </Col>
         <Col md={6}>
-          <PostNewFeed profileDetails={profile} />
+          <PostNewFeed profileDetails={profile} onPostCreated={postCreated} />
           <hr />
-          {!isLoading &&
-            posts.map((post) => (
-              <Feeds profileDetails={profile} key={post._id} posts={post} />
-            ))}
+          {!isLoading && <FeedsWrapper posts={posts} />}
           {isLoading && (
             <div className="centered ">
               <LoadingSpinner />

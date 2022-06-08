@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import PostModal from "./PostModal"
 
@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { hideAlert, showAlert } from "../../store"
 
-const PostNewFeed = ({ profileDetails }) => {
+const PostNewFeed = ({ profileDetails, onPostCreated }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [show, setShow] = useState(false)
@@ -14,6 +14,8 @@ const PostNewFeed = ({ profileDetails }) => {
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
 
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [])
   const newPostHandler = async (post) => {
     try {
       const response = await fetch(
@@ -29,9 +31,11 @@ const PostNewFeed = ({ profileDetails }) => {
         }
       )
       if (response.ok) {
+        const data = await response.json()
+        console.log(data)
         handleClose()
-        navigate("/feed")
-
+        onPostCreated({ user: profileDetails, ...data })
+        console.log("post created", response)
         dispatch(showAlert({ message: "New Post added", type: "success" }))
         setTimeout(() => {
           dispatch(hideAlert())

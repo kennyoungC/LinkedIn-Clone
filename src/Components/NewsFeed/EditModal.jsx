@@ -3,14 +3,20 @@ import { Button, Form, Modal } from "react-bootstrap"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import useHttp from "../../hooks/use-http"
-import { showAlert } from "../../store"
+import { hideAlert, showAlert } from "../../store"
 import LoadingSpinner from "../UI/Spinner/LoadingSpinner"
+import FeedImgModal from "./FeedImgModal"
 
 const EditModal = (props) => {
+  const [show, setShow] = useState(false)
+  const [img, setImg] = useState("")
+
+  const handleClose = () => setShow(false)
+  const handleShow = () => setShow(true)
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const [postInput, setPostInput] = useState(props.postDetail.text)
-  console.log(props.postDetail._id)
+  console.log(props.postDetail)
   const { isEditing, sendRequest } = useHttp()
 
   const editPostHandler = async (e) => {
@@ -27,22 +33,28 @@ const EditModal = (props) => {
           },
         },
         (data) => {
-          console.log(data)
+          // console.log(data)
           dispatch(showAlert({ message: "Post Updated", type: "success" }))
           navigate("/feed")
           props.onHide()
+          setTimeout(() => {
+            dispatch(hideAlert())
+          }, 2000)
         }
       )
     } catch (error) {
       console.log(error)
     }
   }
+  const getpreviewImg = (img) => {
+    setImg(img)
+  }
 
   return (
     <>
       <Modal show={props.show} onHide={props.onHide} animation={true}>
         <Modal.Header closeButton>
-          <Modal.Title>Create a post</Modal.Title>
+          <Modal.Title>Edit post</Modal.Title>
         </Modal.Header>
         {!isEditing ? (
           <Modal.Body>
@@ -68,7 +80,7 @@ const EditModal = (props) => {
                 controlId="exampleForm.ControlTextarea1"
               >
                 <Form.Control
-                  value={postInput}
+                  value={postInput ?? ""}
                   onChange={(e) => setPostInput(e.target.value)}
                   placeholder="What do you want to talk about?"
                   className="border-0"
@@ -76,8 +88,23 @@ const EditModal = (props) => {
                   rows={4}
                 />
               </Form.Group>
+              {show && (
+                <FeedImgModal
+                  onGetImg={getpreviewImg}
+                  postId={props.postDetail._id}
+                  handleClose={handleClose}
+                  show={show}
+                />
+              )}
+              <div className="text-center my-2">
+                <img src={img ?? ""} style={{ width: "290px" }} alt="" />
+              </div>
               <span className="float-start d-flex gap-3">
-                <i className="bi bi-image"></i>
+                <span onClick={handleShow} className="float-start d-flex gap-3">
+                  <span className="text-primary" style={{ cursor: "pointer" }}>
+                    <i className="bi bi-image"></i>
+                  </span>
+                </span>
                 <i className="bi bi-file-play-fill"></i>
                 <i className="bi bi-sticky-fill"></i>
                 <i className="bi bi-briefcase-fill"></i>
