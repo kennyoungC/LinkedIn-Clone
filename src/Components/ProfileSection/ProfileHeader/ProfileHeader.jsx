@@ -1,22 +1,23 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { Row, Col, Button } from "react-bootstrap"
-import { useDispatch, useSelector } from "react-redux"
-import { setId } from "../../../store"
+import { useSelector } from "react-redux"
+import { useParams } from "react-router-dom"
 import EditProfileModal from "./EditProfileModal"
 import ProfileCarousel from "./ProfileCarousel"
 import styles from "./ProfileHeader.module.css"
 import ProfilePicModal from "./ProfilePicModal"
 
-const ProfileHeader = (props) => {
+const ProfileHeader = () => {
   const [showProfileModal, setShowProfileModal] = useState(false)
-  const dispatch = useDispatch()
-  const id = useSelector((state) => state.user.id)
-  const profile = props.profile
-  useEffect(() => {
-    dispatch(setId(profile.id))
-  }, [id, dispatch, profile.id])
+  const userProfile = useSelector((state) => state.profile.profile)
+  const peopleProfile = useSelector(
+    (state) => state.peopleProfile.peopleProfile
+  )
+  const params = useParams()
+
+  const profile = params.profileId ? peopleProfile : userProfile
   let isUser = false
-  if (String(profile.id) === id) {
+  if (!params.profileId) {
     isUser = true
   }
 
@@ -51,20 +52,37 @@ const ProfileHeader = (props) => {
         </span>
       )}
       <div className="card-body position relative">
-        <span className={`${styles["profile-pic"]} position-absolute`}>
-          <img
-            onClick={showProfilePicHandler}
-            src={profile.image}
-            className="card-img-top rounded-circle img-thumbnail"
-            alt="..."
-            style={{
-              height: "150px",
-              width: "150px",
-              objectFit: "cover",
-              cursor: "pointer",
-            }}
-          />
-        </span>
+        {isUser && (
+          <span className={`${styles["profile-pic"]} position-absolute`}>
+            <img
+              onClick={showProfilePicHandler}
+              src={profile.image}
+              className="card-img-top rounded-circle img-thumbnail"
+              alt="..."
+              style={{
+                height: "150px",
+                width: "150px",
+                objectFit: "cover",
+                cursor: "pointer",
+              }}
+            />
+          </span>
+        )}
+        {!isUser && (
+          <span className={`${styles["profile-pic"]} position-absolute`}>
+            <img
+              src={profile.image}
+              className="card-img-top rounded-circle img-thumbnail"
+              alt="..."
+              style={{
+                height: "150px",
+                width: "150px",
+                objectFit: "cover",
+                cursor: "pointer",
+              }}
+            />
+          </span>
+        )}
         {show && <EditProfileModal show={show} onClose={handleClose} />}
         {isUser && (
           <button

@@ -13,7 +13,7 @@ const ExperienceForm = (props) => {
   const [isChecked, setIsChecked] = useState(false)
   const submitHandler = (e) => {
     e.preventDefault()
-    console.log(experience)
+    // console.log(experience)
     props.onSubmit(experience)
   }
 

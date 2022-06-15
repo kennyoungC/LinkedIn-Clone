@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Col, Container, Row } from "react-bootstrap"
+import { useDispatch } from "react-redux"
 import { useParams } from "react-router-dom"
 import About from "../Components/ProfileSection/About"
 import Aside from "../Components/ProfileSection/Aside/Aside"
@@ -7,10 +8,12 @@ import Education from "../Components/ProfileSection/Education"
 import Experience from "../Components/ProfileSection/ProfileExperience/Experience"
 
 import ProfileHeader from "../Components/ProfileSection/ProfileHeader/ProfileHeader"
+import { setPeopleProfile } from "../store"
+import { BEARER_TOKEN } from "../store/BearerToken"
 
 const SpecificProfile = () => {
-  const [profile, setProfile] = useState({})
   const { profileId } = useParams()
+  const dispatch = useDispatch()
 
   useEffect(() => {
     fetchSpecificProfile()
@@ -23,13 +26,12 @@ const SpecificProfile = () => {
         `https://striveschool-api.herokuapp.com/api/profile/${profileId}`,
         {
           headers: {
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjk1MDkxNmJmZTkyYzAwMTVlY2E5ZjAiLCJpYXQiOjE2NTM5MzQzNTgsImV4cCI6MTY1NTE0Mzk1OH0.VaDp06IDD3hAoXF2L3NJHR2aBc8cxxJNoPeBAyIB-lc",
+            Authorization: BEARER_TOKEN,
           },
         }
       )
       const data = await response.json()
-      setProfile(data)
+      dispatch(setPeopleProfile(data))
     } catch (error) {
       console.log(error)
     }
@@ -39,7 +41,7 @@ const SpecificProfile = () => {
     <Container>
       <Row className="my-4">
         <Col md={9}>
-          <ProfileHeader profile={profile} />
+          <ProfileHeader />
           <About />
           <Experience />
           <Education />

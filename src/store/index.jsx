@@ -45,13 +45,39 @@ const experienceSlice = createSlice({
   },
 })
 
-const userSlices = createSlice({
-  name: "user",
-  initialState: { id: "" },
+const peopleProfileSlices = createSlice({
+  name: "peopleProfile",
+  initialState: { peopleProfile: {}, people: [] },
   reducers: {
-    setId(state, action) {
-      state.id = action.payload
-      localStorage.setItem("id", action.payload)
+    setPeopleProfile(state, action) {
+      state.peopleProfile = action.payload
+    },
+    setPeople(state, action) {
+      state.people = action.payload
+    },
+  },
+})
+
+const profileSlices = createSlice({
+  name: "profile",
+  initialState: {
+    profile: {},
+  },
+  reducers: {
+    setProfileR(state, action) {
+      state.profile = action.payload
+    },
+  },
+})
+
+const postsSlice = createSlice({
+  name: "posts",
+  initialState: {
+    posts: [],
+  },
+  reducers: {
+    setPosts(state, action) {
+      state.posts = action.payload // without
     },
   },
 })
@@ -60,11 +86,15 @@ const store = configureStore({
   reducer: {
     alert: alertSlice.reducer,
     experience: experienceSlice.reducer,
-    user: userSlices.reducer,
+    posts: postsSlice.reducer,
+    profile: profileSlices.reducer,
+    peopleProfile: peopleProfileSlices.reducer,
   },
 })
+export const { setProfileR } = profileSlices.actions
+export const { setPeopleProfile, setPeople } = peopleProfileSlices.actions
 export const { showAlert, hideAlert } = alertSlice.actions
-export const { setId } = userSlices.actions
 export const { showEditing, getItem, addExperience, removeExperience } =
   experienceSlice.actions
+export const { setPosts } = postsSlice.actions
 export default store

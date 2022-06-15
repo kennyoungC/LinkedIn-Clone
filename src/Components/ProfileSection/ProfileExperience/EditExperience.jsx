@@ -10,21 +10,16 @@ import ExperienceItem from "./ExperienceItem"
 const EditExperience = () => {
   const navigate = useNavigate()
   const [show, setShow] = useState(false)
-  // const [showEditForm, setShowEditForm] = useState(false)
 
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
-
-  // const handleCloseEditForm = () => setShowEditForm(false)
-  // const handleShowEditForm = () => setShowEditForm(true)
-
-  const { experienceId } = useParams()
 
   const experience = useSelector((state) => state.experience.experience)
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getItem())
     dispatch(showEditing(true))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const goBackHandler = () => {

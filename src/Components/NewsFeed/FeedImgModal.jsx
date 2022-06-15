@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { Button, Modal } from "react-bootstrap"
 import LoadingSpinner from "../UI/Spinner/LoadingSpinner"
 import styles from "./FeedImgModal.module.css"
+import { BEARER_TOKEN } from "../../store/BearerToken"
 function FeedImgModal(props) {
   const [postImg, setPostImg] = useState(null)
   const [preview, setPreview] = useState()
@@ -50,8 +51,7 @@ function FeedImgModal(props) {
         body: formData,
         method: "POST",
         headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjk1MDkxNmJmZTkyYzAwMTVlY2E5ZjAiLCJpYXQiOjE2NTM5MzQzNTgsImV4cCI6MTY1NTE0Mzk1OH0.VaDp06IDD3hAoXF2L3NJHR2aBc8cxxJNoPeBAyIB-lc",
+          Authorization: BEARER_TOKEN,
         },
       }
     )

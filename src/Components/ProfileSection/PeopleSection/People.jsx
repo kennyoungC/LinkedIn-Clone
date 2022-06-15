@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react"
 import useHttp from "../../../hooks/use-http"
+import { BEARER_TOKEN } from "../../../store/BearerToken"
 import LoadingSpinner from "../../UI/Spinner/LoadingSpinner"
 import PeopleItem from "./PeopleItem"
+import { setPeople } from "../../../store"
+import { useDispatch, useSelector } from "react-redux"
 
 const People = ({ title }) => {
-  const [people, setPeople] = useState([])
-  const [showMore, setShowMore] = useState(5)
+  const people = useSelector((state) => state.peopleProfile.people)
+  const dispatch = useDispatch()
+  const [showMore, setShowMore] = useState(25)
   const [isShowing, setIsShowing] = useState(true)
 
   const { isEditing: isLoading, sendRequest } = useHttp()
   const url = "https://striveschool-api.herokuapp.com/api/profile/"
-  const auth =
-    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjk1MDkxNmJmZTkyYzAwMTVlY2E5ZjAiLCJpYXQiOjE2NTM5MzQzNTgsImV4cCI6MTY1NTE0Mzk1OH0.VaDp06IDD3hAoXF2L3NJHR2aBc8cxxJNoPeBAyIB-lc"
+
   useEffect(() => {
     const transformedData = (people) => {
       let loadedProfile = []
@@ -24,14 +27,14 @@ const People = ({ title }) => {
           title: people[keys].title,
         })
       }
-      setPeople(loadedProfile)
+      dispatch(setPeople(loadedProfile))
     }
 
     sendRequest(
       {
         url,
         headers: {
-          Authorization: auth,
+          Authorization: BEARER_TOKEN,
         },
       },
       transformedData
@@ -39,7 +42,6 @@ const People = ({ title }) => {
   }, [sendRequest])
 
   const showMoreHandler = () => {
-    // setShowMore(showMore + 5)
     setShowMore((prevState) => prevState + 5)
     setIsShowing(false)
   }
@@ -52,7 +54,7 @@ const People = ({ title }) => {
       <h6>{title}</h6>
       {!isLoading &&
         people
-          .slice(0, showMore)
+          .slice(20, showMore)
           .map((person) => <PeopleItem key={person.id} person={person} />)}
       {isLoading && (
         <div className="centered">

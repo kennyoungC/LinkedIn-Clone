@@ -3,12 +3,17 @@ import { Link } from "react-router-dom"
 import PostModal from "./PostModal"
 
 import { useNavigate } from "react-router-dom"
-import { useDispatch } from "react-redux"
-import { hideAlert, showAlert } from "../../store"
+import { useDispatch, useSelector } from "react-redux"
+import { hideAlert, setPosts, showAlert } from "../../store"
+import { BEARER_TOKEN } from "../../store/BearerToken"
 
-const PostNewFeed = ({ profileDetails, onPostCreated }) => {
+const PostNewFeed = ({ profileDetails }) => {
+  const posts = useSelector((state) => state.posts.posts)
+  const profile = useSelector((state) => state.profile.profile)
+  console.log("my profile", profile)
+  // console.log(posts)
   const dispatch = useDispatch()
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   const [show, setShow] = useState(false)
 
   const handleClose = () => setShow(false)
@@ -25,24 +30,29 @@ const PostNewFeed = ({ profileDetails, onPostCreated }) => {
           body: JSON.stringify({ text: post }),
           headers: {
             "Content-Type": "application/json",
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjk1MDkxNmJmZTkyYzAwMTVlY2E5ZjAiLCJpYXQiOjE2NTM5MzQzNTgsImV4cCI6MTY1NTE0Mzk1OH0.VaDp06IDD3hAoXF2L3NJHR2aBc8cxxJNoPeBAyIB-lc",
+            Authorization: BEARER_TOKEN,
           },
         }
       )
-      if (response.ok) {
-        const data = await response.json()
-        console.log(data)
-        handleClose()
-        onPostCreated({ user: profileDetails, ...data })
-        console.log("post created", response)
-        dispatch(showAlert({ message: "New Post added", type: "success" }))
-        setTimeout(() => {
-          dispatch(hideAlert())
-        }, 2000)
-      } else {
-        throw new Error("Something went wrong")
+      if (!response.ok) {
+        throw new Error(response.statusText)
       }
+      const data = await response.json()
+      console.log(data)
+      const newPost = [
+        {
+          user: profile,
+          ...data,
+        },
+        ...posts,
+      ]
+      console.log("newpost array", newPost)
+      dispatch(setPosts(newPost))
+      dispatch(showAlert({ message: "New Post added", type: "success" }))
+      setTimeout(() => {
+        dispatch(hideAlert())
+      }, 3000)
+      handleClose()
     } catch (error) {
       console.log(error)
     }

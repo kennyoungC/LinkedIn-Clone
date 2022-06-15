@@ -1,21 +1,22 @@
 import React, { useState } from "react"
 import { Button, Form, Modal } from "react-bootstrap"
-import { useDispatch } from "react-redux"
-import { useNavigate } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
 import useHttp from "../../hooks/use-http"
-import { hideAlert, showAlert } from "../../store"
+import { hideAlert, setPosts, showAlert } from "../../store"
+import { BEARER_TOKEN } from "../../store/BearerToken"
 import LoadingSpinner from "../UI/Spinner/LoadingSpinner"
 import FeedImgModal from "./FeedImgModal"
 
 const EditModal = (props) => {
+  const posts = useSelector((state) => state.posts.posts)
   const [show, setShow] = useState(false)
   const [img, setImg] = useState("")
 
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
-  const navigate = useNavigate()
   const dispatch = useDispatch()
-  const [postInput, setPostInput] = useState(props.postDetail.text)
+  const { text } = props.postDetail
+  const [postInput, setPostInput] = useState(text)
   console.log(props.postDetail)
   const { isEditing, sendRequest } = useHttp()
 
@@ -28,18 +29,20 @@ const EditModal = (props) => {
           body: { text: postInput },
           headers: {
             "Content-Type": "application/json",
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjk1MDkxNmJmZTkyYzAwMTVlY2E5ZjAiLCJpYXQiOjE2NTM5MzQzNTgsImV4cCI6MTY1NTE0Mzk1OH0.VaDp06IDD3hAoXF2L3NJHR2aBc8cxxJNoPeBAyIB-lc",
+            Authorization: BEARER_TOKEN,
           },
         },
         (data) => {
           // console.log(data)
-          dispatch(showAlert({ message: "Post Updated", type: "success" }))
-          navigate("/feed")
+
+          dispatch(
+            showAlert({ message: "Post Successfully Updated", type: "success" })
+          )
           props.onHide()
           setTimeout(() => {
             dispatch(hideAlert())
-          }, 2000)
+            window.location.reload()
+          }, 1000)
         }
       )
     } catch (error) {

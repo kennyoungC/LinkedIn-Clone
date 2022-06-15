@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react"
 import { Button, Modal } from "react-bootstrap"
+import { BEARER_TOKEN } from "../../../store/BearerToken"
 import LoadingSpinner from "../../UI/Spinner/LoadingSpinner"
 import styles from "./ProfilePicModal.module.css"
 
@@ -31,14 +32,15 @@ function ProfilePicModal({ show, handleClose, profile }) {
         body: formData,
         method: "POST",
         headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjk1MDkxNmJmZTkyYzAwMTVlY2E5ZjAiLCJpYXQiOjE2NTM5MzQzNTgsImV4cCI6MTY1NTE0Mzk1OH0.VaDp06IDD3hAoXF2L3NJHR2aBc8cxxJNoPeBAyIB-lc",
+          Authorization: BEARER_TOKEN,
         },
       }
     )
     setIsEditing(false)
     setIsEdited(true)
-    const data = await response.json()
+    setTimeout(() => {
+      window.location.reload()
+    }, 1000)
     // console.log(data)
   }
 

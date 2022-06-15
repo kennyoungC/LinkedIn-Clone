@@ -6,9 +6,11 @@ import useHttp from "../../../hooks/use-http"
 import LoadingSpinner from "../../UI/Spinner/LoadingSpinner"
 import EditSpecificExperienceForm from "./EditSpecificExperienceForm"
 import { useffect } from "react"
+import { BEARER_TOKEN } from "../../../store/BearerToken"
+import { hideAlert, showAlert } from "../../../store"
 const EditSpecificExperience = (props) => {
   const navigate = useNavigate()
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
   const { isEditing, sendRequest } = useHttp()
   const { experienceId } = useParams()
 
@@ -21,13 +23,21 @@ const EditSpecificExperience = (props) => {
 
         headers: {
           "Content-Type": "application/json",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjk1MDkxNmJmZTkyYzAwMTVlY2E5ZjAiLCJpYXQiOjE2NTM5MzQzNTgsImV4cCI6MTY1NTE0Mzk1OH0.VaDp06IDD3hAoXF2L3NJHR2aBc8cxxJNoPeBAyIB-lc",
+          Authorization: BEARER_TOKEN,
         },
       },
       () => {
         props.onClose()
         navigate("/profile")
+        dispatch(
+          showAlert({
+            message: "Your Experience Was Successfully Updated",
+            type: "success",
+          })
+        )
+        setTimeout(() => {
+          dispatch(hideAlert())
+        }, 3000)
       }
     )
   }

@@ -5,6 +5,7 @@ import styles from "./OptionListMenu.module.css"
 
 import { useDispatch } from "react-redux"
 import { hideAlert, showAlert } from "../../store"
+import { BEARER_TOKEN } from "../../store/BearerToken"
 
 const UserOptionListMenu = ({ postId, profile }) => {
   const dispatch = useDispatch()
@@ -19,8 +20,7 @@ const UserOptionListMenu = ({ postId, profile }) => {
       {
         url: `https://striveschool-api.herokuapp.com/api/posts/${postId}`,
         headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjk1MDkxNmJmZTkyYzAwMTVlY2E5ZjAiLCJpYXQiOjE2NTM5MzQzNTgsImV4cCI6MTY1NTE0Mzk1OH0.VaDp06IDD3hAoXF2L3NJHR2aBc8cxxJNoPeBAyIB-lc",
+          Authorization: BEARER_TOKEN,
         },
       },
       (data) => {
@@ -29,27 +29,32 @@ const UserOptionListMenu = ({ postId, profile }) => {
     )
   }, [sendRequest, postId])
 
-  const deletePostHandler = async (e) => {
+  const deletePostHandler = async () => {
+    alert("Are you sure you want to delete this post?")
+    const delPost = (data) => {
+      console.log(data)
+
+      dispatch(showAlert({ message: "Post Deleted", type: "danger" }))
+
+      setTimeout(() => {
+        dispatch(hideAlert())
+        window.location.reload()
+      }, 3000)
+    }
     sendRequest(
       {
         url: `https://striveschool-api.herokuapp.com/api/posts/${postId}`,
         method: "DELETE",
-
         headers: {
           "Content-Type": "application/json",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjk1MDkxNmJmZTkyYzAwMTVlY2E5ZjAiLCJpYXQiOjE2NTM5MzQzNTgsImV4cCI6MTY1NTE0Mzk1OH0.VaDp06IDD3hAoXF2L3NJHR2aBc8cxxJNoPeBAyIB-lc",
+          Authorization: BEARER_TOKEN,
         },
       },
-      (data) => {
-        console.log(data)
-        dispatch(showAlert({ message: "Post Deleted", type: "danger" }))
-
-        setTimeout(() => {
-          dispatch(hideAlert())
-        }, 3000)
-      }
+      delPost
     )
+    setTimeout(() => {
+      window.location.reload()
+    }, 1000)
   }
 
   return (
@@ -123,7 +128,7 @@ const UserOptionListMenu = ({ postId, profile }) => {
           </span>
           <span>
             <div className="d-flex flex-column">
-              <p className="mb-0 "> Delete post with</p>
+              <p className="mb-0 "> Delete post </p>
             </div>
           </span>
         </div>

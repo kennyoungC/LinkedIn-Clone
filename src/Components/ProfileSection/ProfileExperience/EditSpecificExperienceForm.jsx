@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react"
 import { Form, Modal, Button } from "react-bootstrap"
+import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import useHttp from "../../../hooks/use-http"
+import { hideAlert, showAlert } from "../../../store"
+import { BEARER_TOKEN } from "../../../store/BearerToken"
 
 const EditSpecificExperienceForm = (props) => {
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   const { isEditing, sendRequest } = useHttp()
   const [isDeleting, setIsDeleting] = useState(false)
@@ -35,8 +39,7 @@ const EditSpecificExperienceForm = (props) => {
         url: `https://striveschool-api.herokuapp.com/api/profile/${props.userId}/experiences/${props.experienceId}`,
 
         headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjk1MDkxNmJmZTkyYzAwMTVlY2E5ZjAiLCJpYXQiOjE2NTM5MzQzNTgsImV4cCI6MTY1NTE0Mzk1OH0.VaDp06IDD3hAoXF2L3NJHR2aBc8cxxJNoPeBAyIB-lc",
+          Authorization: BEARER_TOKEN,
         },
       },
       transformedExperience
@@ -51,8 +54,7 @@ const EditSpecificExperienceForm = (props) => {
         {
           method: "DELETE",
           headers: {
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjk1MDkxNmJmZTkyYzAwMTVlY2E5ZjAiLCJpYXQiOjE2NTM5MzQzNTgsImV4cCI6MTY1NTE0Mzk1OH0.VaDp06IDD3hAoXF2L3NJHR2aBc8cxxJNoPeBAyIB-lc",
+            Authorization: BEARER_TOKEN,
           },
         }
       )
@@ -60,6 +62,15 @@ const EditSpecificExperienceForm = (props) => {
         throw new Error("Unable to delete experience")
       }
       if (response.ok) {
+        dispatch(
+          showAlert({
+            message: "Experience was successfully DELETED",
+            type: "danger",
+          })
+        )
+        setTimeout(() => {
+          dispatch(hideAlert())
+        }, 3000)
         setTimeout(() => {
           navigate("/profile")
         }, 3000)
@@ -176,8 +187,18 @@ const EditSpecificExperienceForm = (props) => {
           </Button>
         )}
         {isDeleting && (
-          <Button onClick={deleteHandler} variant="danger" type="button">
-            Deleting..
+          <Button
+            onClick={deleteHandler}
+            variant="danger"
+            type="button"
+            className="d-flex align-items-center gap-2"
+          >
+            <span>
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </span>
+            <span>Deleting...</span>
           </Button>
         )}
         {isDeleted && (

@@ -1,8 +1,13 @@
 .alert {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translate(-50%, 0%);
+  position: fixed; /* making this box fixed */
+  border: 1px solid rgb(112, 109, 109); /* to see the box */
+  margin: 0px; /* to see the border touching the viewport */
+  padding: 12px;
+  bottom: 0;
+  left: 0; /* bottom right position */
+  min-width: 200px;
+  z-index: 1111;
+
   animation: fadeIn 0.5s ease-out forwards;
 }
 

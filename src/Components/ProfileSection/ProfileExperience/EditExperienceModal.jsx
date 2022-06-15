@@ -1,25 +1,24 @@
 import { Modal } from "react-bootstrap"
-import { useDispatch } from "react-redux"
-import { useNavigate } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
 import useHttp from "../../../hooks/use-http"
-import { hideAlert, showAlert } from "../../../store"
+import { addExperience, hideAlert, showAlert } from "../../../store"
+import { BEARER_TOKEN } from "../../../store/BearerToken"
 import LoadingSpinner from "../../UI/Spinner/LoadingSpinner"
 import Experience from "./Experience"
 import ExperienceForm from "./ExperienceForm"
 
 const EditExperienceModal = (props) => {
-  const navigate = useNavigate()
   const url = `https://striveschool-api.herokuapp.com/api/profile/${props.id}/experiences`
 
-  const auth =
-    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjk1MDkxNmJmZTkyYzAwMTVlY2E5ZjAiLCJpYXQiOjE2NTM5MzQzNTgsImV4cCI6MTY1NTE0Mzk1OH0.VaDp06IDD3hAoXF2L3NJHR2aBc8cxxJNoPeBAyIB-lc"
   const { isEditing, sendRequest } = useHttp()
+  const exp = useSelector((state) => state.experience.experience)
   const dispatch = useDispatch()
-  const submitForm = async (newProfile) => {
-    const p = () => {
-      dispatch(showAlert({ message: "New Experience Added", type: "success" }))
+  const submitForm = async (newExp) => {
+    const postExp = (data) => {
+      // dispatch(showAlert({ message: "New Experience Added", type: "success" }))
       props.onClose()
-      navigate("/profile")
+      dispatch(addExperience([...exp, data]))
+      dispatch(showAlert({ message: "New Experience Added", type: "success" }))
       setTimeout(() => {
         dispatch(hideAlert())
       }, 3000)
@@ -29,13 +28,13 @@ const EditExperienceModal = (props) => {
       {
         url,
         method: "POST",
-        body: { ...newProfile },
+        body: { ...newExp },
         headers: {
-          Authorization: auth,
+          Authorization: BEARER_TOKEN,
           "Content-Type": "application/json",
         },
       },
-      p
+      postExp
     )
   }
 

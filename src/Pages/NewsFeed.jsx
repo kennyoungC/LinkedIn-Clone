@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Col, Container, Row } from "react-bootstrap"
+import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import AddToFeed from "../Components/NewsFeed/AddToFeed"
 import Feeds from "../Components/NewsFeed/Feeds"
@@ -9,9 +10,14 @@ import PostNewFeed from "../Components/NewsFeed/PostNewFeed"
 import WhoIsHiring from "../Components/NewsFeed/WhoIsHiring"
 import LoadingSpinner from "../Components/UI/Spinner/LoadingSpinner"
 import useHttp from "../hooks/use-http"
+import { setPosts } from "../store"
+import { BEARER_TOKEN } from "../store/BearerToken"
 
 const NewsFeed = () => {
-  const [posts, setPosts] = useState([])
+  const dispatch = useDispatch()
+  const posts = useSelector((state) => state.posts.posts)
+  // const profile = useSelector((state) => state.profile.profile)
+
   const [profile, setProfile] = useState({})
   const { isEditing: isLoading, sendRequest } = useHttp()
   // const [isLoading, setIsLoading] = useState(false)
@@ -19,24 +25,20 @@ const NewsFeed = () => {
     const getData = (data) => {
       const filterOutNull = data.filter((data) => data.user !== null)
       const miniPost = filterOutNull.reverse().slice(0, 20)
-      setPosts(miniPost)
+
+      dispatch(setPosts(miniPost))
     }
 
     sendRequest(
       {
         url: "https://striveschool-api.herokuapp.com/api/posts/",
         headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjk1MDkxNmJmZTkyYzAwMTVlY2E5ZjAiLCJpYXQiOjE2NTM5MzQzNTgsImV4cCI6MTY1NTE0Mzk1OH0.VaDp06IDD3hAoXF2L3NJHR2aBc8cxxJNoPeBAyIB-lc",
+          Authorization: BEARER_TOKEN,
         },
       },
       getData
     )
   }, [sendRequest])
-
-  const postCreated = (newPost) => {
-    setPosts([newPost, ...posts])
-  }
 
   useEffect(() => {
     // fetchNewsFeed()
@@ -54,8 +56,7 @@ const NewsFeed = () => {
       {
         url: "https://striveschool-api.herokuapp.com/api/profile/me",
         headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjk1MDkxNmJmZTkyYzAwMTVlY2E5ZjAiLCJpYXQiOjE2NTM5MzQzNTgsImV4cCI6MTY1NTE0Mzk1OH0.VaDp06IDD3hAoXF2L3NJHR2aBc8cxxJNoPeBAyIB-lc",
+          Authorization: BEARER_TOKEN,
         },
       },
       getData
@@ -77,7 +78,7 @@ const NewsFeed = () => {
           <FeedsRecent />
         </Col>
         <Col md={6}>
-          <PostNewFeed profileDetails={profile} onPostCreated={postCreated} />
+          <PostNewFeed profileDetails={profile} />
           <hr />
           {!isLoading && <FeedsWrapper posts={posts} />}
           {isLoading && (

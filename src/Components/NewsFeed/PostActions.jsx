@@ -1,13 +1,20 @@
-import React from "react"
+import React, { useState } from "react"
 
 const PostActions = () => {
+  const [isLiked, setIsLiked] = useState(false)
+
+  const handleLike = () => {
+    setIsLiked((prev) => !prev)
+  }
   return (
     <ul className="list-unstyled d-flex align-items-center justify-content-between p-1">
-      <li>
-        <span className=" me-1">
-          <i className="bi bi-hand-thumbs-up"></i>
+      <li onClick={handleLike} className={isLiked ? "text-primary" : ""}>
+        <span className="me-1">
+          <i
+            className={`${"bi bi-hand-thumbs-up"}${isLiked ? "-fill" : ""}`}
+          ></i>
         </span>{" "}
-        Like
+        {isLiked ? "Liked" : "Like"}
       </li>
       <li>
         <span className=" me-1">

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react"
 import { Form, Modal } from "react-bootstrap"
 import useHttp from "../../../hooks/use-http"
+import { BEARER_TOKEN } from "../../../store/BearerToken"
 
 const ProfileForm = (props) => {
   const url = "https://striveschool-api.herokuapp.com/api/profile/me"
-  const auth =
-    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjk1MDkxNmJmZTkyYzAwMTVlY2E5ZjAiLCJpYXQiOjE2NTM5MzQzNTgsImV4cCI6MTY1NTE0Mzk1OH0.VaDp06IDD3hAoXF2L3NJHR2aBc8cxxJNoPeBAyIB-lc"
+
   const { isEditing, sendRequest: fetchProfiles } = useHttp()
   const [profile, setProfile] = useState({
     id: "",
@@ -33,7 +33,10 @@ const ProfileForm = (props) => {
       })
     }
 
-    fetchProfiles({ url, headers: { Authorization: auth } }, transformedProfile)
+    fetchProfiles(
+      { url, headers: { Authorization: BEARER_TOKEN } },
+      transformedProfile
+    )
   }, [fetchProfiles])
 
   // const fetchProfiles = async () => {

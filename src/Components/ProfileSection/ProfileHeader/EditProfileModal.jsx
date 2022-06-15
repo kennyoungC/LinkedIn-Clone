@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux"
 
 import useHttp from "../../../hooks/use-http"
 import { hideAlert, showAlert } from "../../../store"
+import { BEARER_TOKEN } from "../../../store/BearerToken"
 
 import LoadingSpinner from "../../UI/Spinner/LoadingSpinner"
 import ProfileForm from "./ProfileForm"
@@ -10,11 +11,10 @@ import ProfileForm from "./ProfileForm"
 const EditProfileModal = (props) => {
   const dispatch = useDispatch()
   const url = "https://striveschool-api.herokuapp.com/api/profile/"
-  const auth =
-    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjk1MDkxNmJmZTkyYzAwMTVlY2E5ZjAiLCJpYXQiOjE2NTM5MzQzNTgsImV4cCI6MTY1NTE0Mzk1OH0.VaDp06IDD3hAoXF2L3NJHR2aBc8cxxJNoPeBAyIB-lc"
+
   const { isEditing, sendRequest } = useHttp()
   // const [isEditing, setIsEditing] = useState(false)
-
+  // console.log("fired!!!")
   const submitForm = (newProfile) => {
     sendRequest(
       {
@@ -23,7 +23,7 @@ const EditProfileModal = (props) => {
         body: newProfile,
         headers: {
           "Content-Type": "application/json",
-          Authorization: auth,
+          Authorization: BEARER_TOKEN,
         },
       },
       () => {
@@ -38,6 +38,7 @@ const EditProfileModal = (props) => {
         setTimeout(() => {
           dispatch(hideAlert())
         }, 3000)
+        // window.location.reload()
       }
     )
   }

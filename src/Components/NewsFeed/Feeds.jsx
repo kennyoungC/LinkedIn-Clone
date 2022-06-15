@@ -54,13 +54,13 @@ const Feeds = ({ posts, profileDetails }) => {
         </span>
       </div>
       <p className="mb-0">{posts.text}</p>
-      <div className="text-center my-1">
+      <div className="text-center my-4">
         <img
           src={posts.image !== undefined ? posts.image : " "}
           alt=""
           style={{
-            width: posts.image !== undefined ? "290px" : "",
-            height: posts.image !== undefined ? "290px" : "",
+            width: posts.image !== undefined ? "300px" : "",
+            height: posts.image !== undefined ? "100%" : "",
             objectFit: "cover",
           }}
         />

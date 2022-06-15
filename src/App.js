@@ -15,7 +15,7 @@ function App() {
 
   const UserProfile = (
     <Container>
-      {isShowing && <AlertMessage />}
+      {/* {isShowing && <AlertMessage />} */}
       <main className="my-4">
         <Profile />
       </main>
@@ -23,16 +23,18 @@ function App() {
   )
   const newsFeed = (
     <>
-      {isShowing && <AlertMessage />}
+      {/* {isShowing && <AlertMessage />} */}
 
       <NewsFeed />
     </>
   )
 
   return (
-    <>
+    <div className="position-relative">
       <MyNavbar />
+      {isShowing && <AlertMessage />}
       <Routes>
+        <Route path="/" element={newsFeed} />
         <Route path="/feed" element={newsFeed} />
         <Route path="/profile" element={UserProfile} />
         <Route
@@ -46,7 +48,7 @@ function App() {
       </Routes>
       <GoToTop />
       <MyFooter />
-    </>
+    </div>
   )
 }
 

@@ -4,7 +4,7 @@ import NavLinks from "./NavLinks"
 
 const MyNavbar = () => {
   return (
-    <div className="bg-white border-bottom">
+    <div className="bg-white border-bottom d-none d-md-block">
       <Container className="">
         <Row className="align-items-center py-2">
           <Col md={5}>
@@ -21,7 +21,7 @@ const MyNavbar = () => {
                 </span>
                 <input
                   type="text"
-                  className="form-control"
+                  className="form-control "
                   placeholder="Username"
                   aria-label="Username"
                   aria-describedby="basic-addon1"

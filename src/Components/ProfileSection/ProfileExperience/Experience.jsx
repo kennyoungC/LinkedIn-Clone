@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useParams } from "react-router-dom"
 import { addExperience, showEditing } from "../../../store"
+import { BEARER_TOKEN } from "../../../store/BearerToken"
 import LoadingSpinner from "../../UI/Spinner/LoadingSpinner"
 import EditExperienceModal from "./EditExperienceModal"
 import ExperienceItem from "./ExperienceItem"
 
-const Experience = ({ experienceId }) => {
+const Experience = () => {
   const experience = useSelector((state) => state.experience.experience)
+  const experienceId = useSelector((state) => state.profile.profile._id)
   const [isLoading, setIsLoading] = useState(false)
 
   const dispatch = useDispatch()
@@ -29,8 +31,7 @@ const Experience = ({ experienceId }) => {
     try {
       const response = await fetch(url, {
         headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjliMjc2ZjYwOTUyNTAwMTUzZTc1NDEiLCJpYXQiOjE2NTQzMzUzNDQsImV4cCI6MTY1NTU0NDk0NH0.zh3wENBfsCIGTLqdRiTI94Fauch8Ttcg4eCIbZ16DnE",
+          Authorization: BEARER_TOKEN,
         },
       })
       if (!response.ok) {
